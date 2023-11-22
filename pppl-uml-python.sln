@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34024.191
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "pppl-uml-python", "pppl-uml-python\pppl-uml-python.csproj", "{8848FC1A-A87B-4227-B684-71B5C1A64965}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8848FC1A-A87B-4227-B684-71B5C1A64965}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8848FC1A-A87B-4227-B684-71B5C1A64965}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8848FC1A-A87B-4227-B684-71B5C1A64965}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8848FC1A-A87B-4227-B684-71B5C1A64965}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C1695219-A7F8-4D11-9CED-D066B81EE8AD}
+	EndGlobalSection
+EndGlobal
