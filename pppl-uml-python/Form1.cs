@@ -97,18 +97,17 @@ namespace pppl_uml_python
                                 // Check for naming attribute or referential attribute
                                 if (attribute["attribute_type"]?.ToString() == "naming_attribute")
                                 {
-                                    classAttributes += $"    def __init__(self, {attributeName}):{Environment.NewLine}";
+                                    classAttributes += $"        self.{attributeName} = {attributeName}{Environment.NewLine}";
                                 }
                                 else if (attribute["attribute_type"]?.ToString() == "referential_attribute")
                                 {
-                                    // Referential attribute should not have default value
-                                    classAttributes += $"    def __init__(self, {attributeName}):{Environment.NewLine}";
+                                    classAttributes += $"        self.{attributeName} = {attributeName}{Environment.NewLine}";
                                 }
                                 else
                                 {
                                     // Descriptive attribute with default value
                                     string defaultValue = attribute["default_value"]?.ToString() ?? "";
-                                    classAttributes += $"    def __init__(self, {attributeName}={defaultValue}):{Environment.NewLine}";
+                                    classAttributes += $"        self.{attributeName} = {attributeName} if {attributeName} is not None else {defaultValue}{Environment.NewLine}";
                                 }
                             }
                         }
@@ -116,13 +115,16 @@ namespace pppl_uml_python
 
                     if (!string.IsNullOrEmpty(className))
                     {
-                        pythonCodeBuilder.AppendLine($"class {className}:{Environment.NewLine}{classAttributes}{Environment.NewLine}");
+                        pythonCodeBuilder.AppendLine($"class {className}:{Environment.NewLine}");
+                        pythonCodeBuilder.AppendLine($"    def __init__(self, {classAttributes}):");
+                        pythonCodeBuilder.AppendLine();
                     }
                 }
             }
 
             return pythonCodeBuilder.ToString();
         }
+
 
 
 
@@ -160,7 +162,7 @@ namespace pppl_uml_python
             Clipboard.SetText(textBox1.Text);
 
             // Optionally, provide user feedback
-            MessageBox.Show("Python code copied to clipboard!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("JSON copied to clipboard!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }
