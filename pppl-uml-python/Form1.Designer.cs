@@ -45,18 +45,18 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(330, 23);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(99, 13);
+            this.label1.Size = new System.Drawing.Size(130, 13);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Generate to Python";
+            this.label1.Text = "Generate JSON to Python";
             // 
             // panel1
             // 
             this.panel1.AutoScroll = true;
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel1.Controls.Add(this.textGeneratePython);
-            this.panel1.Location = new System.Drawing.Point(416, 51);
+            this.panel1.Location = new System.Drawing.Point(416, 56);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(358, 352);
+            this.panel1.Size = new System.Drawing.Size(358, 347);
             this.panel1.TabIndex = 1;
             // 
             // textGeneratePython
@@ -70,58 +70,59 @@
             // 
             // btnGenerate
             // 
-            this.btnGenerate.Location = new System.Drawing.Point(218, 403);
+            this.btnGenerate.Location = new System.Drawing.Point(218, 419);
             this.btnGenerate.Name = "btnGenerate";
-            this.btnGenerate.Size = new System.Drawing.Size(178, 23);
-            this.btnGenerate.TabIndex = 2;
+            this.btnGenerate.Size = new System.Drawing.Size(178, 33);
+            this.btnGenerate.TabIndex = 4;
             this.btnGenerate.Text = "Generate to Python";
             this.btnGenerate.UseVisualStyleBackColor = true;
             this.btnGenerate.Click += new System.EventHandler(this.btnGenerate_Click);
             // 
             // btnClear
             // 
-            this.btnClear.Location = new System.Drawing.Point(608, 409);
+            this.btnClear.Location = new System.Drawing.Point(608, 419);
             this.btnClear.Name = "btnClear";
-            this.btnClear.Size = new System.Drawing.Size(166, 23);
-            this.btnClear.TabIndex = 4;
+            this.btnClear.Size = new System.Drawing.Size(166, 33);
+            this.btnClear.TabIndex = 6;
             this.btnClear.Text = "Clear All Data";
             this.btnClear.UseVisualStyleBackColor = true;
+            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             // 
             // btnUpload
             // 
-            this.btnUpload.Location = new System.Drawing.Point(26, 22);
+            this.btnUpload.Location = new System.Drawing.Point(26, 12);
             this.btnUpload.Name = "btnUpload";
-            this.btnUpload.Size = new System.Drawing.Size(202, 23);
-            this.btnUpload.TabIndex = 5;
+            this.btnUpload.Size = new System.Drawing.Size(123, 33);
+            this.btnUpload.TabIndex = 1;
             this.btnUpload.Text = "Upload File";
             this.btnUpload.UseVisualStyleBackColor = true;
             this.btnUpload.Click += new System.EventHandler(this.btnUpload_Click);
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(26, 51);
+            this.textBox1.Location = new System.Drawing.Point(26, 56);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
             this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.textBox1.Size = new System.Drawing.Size(370, 346);
-            this.textBox1.TabIndex = 3;
+            this.textBox1.TabIndex = 2;
             // 
             // bt_copyPy
             // 
-            this.bt_copyPy.Location = new System.Drawing.Point(416, 409);
+            this.bt_copyPy.Location = new System.Drawing.Point(416, 419);
             this.bt_copyPy.Name = "bt_copyPy";
-            this.bt_copyPy.Size = new System.Drawing.Size(186, 23);
-            this.bt_copyPy.TabIndex = 6;
+            this.bt_copyPy.Size = new System.Drawing.Size(186, 33);
+            this.bt_copyPy.TabIndex = 5;
             this.bt_copyPy.Text = "Copy Code";
             this.bt_copyPy.UseVisualStyleBackColor = true;
             this.bt_copyPy.Click += new System.EventHandler(this.bt_copyPy_Click);
             // 
             // bt_copyJSON
             // 
-            this.bt_copyJSON.Location = new System.Drawing.Point(26, 403);
+            this.bt_copyJSON.Location = new System.Drawing.Point(26, 419);
             this.bt_copyJSON.Name = "bt_copyJSON";
-            this.bt_copyJSON.Size = new System.Drawing.Size(186, 23);
-            this.bt_copyJSON.TabIndex = 7;
+            this.bt_copyJSON.Size = new System.Drawing.Size(186, 33);
+            this.bt_copyJSON.TabIndex = 3;
             this.bt_copyJSON.Text = "Copy JSON";
             this.bt_copyJSON.UseVisualStyleBackColor = true;
             this.bt_copyJSON.Click += new System.EventHandler(this.bt_copyJSON_Click);
@@ -130,7 +131,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(800, 475);
             this.Controls.Add(this.bt_copyJSON);
             this.Controls.Add(this.bt_copyPy);
             this.Controls.Add(this.btnUpload);
