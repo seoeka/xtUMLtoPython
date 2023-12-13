@@ -73,7 +73,8 @@ namespace pppl_uml_python
             this.textGeneratePython.Name = "textGeneratePython";
             this.textGeneratePython.Size = new System.Drawing.Size(35, 13);
             this.textGeneratePython.TabIndex = 0;
-            this.textGeneratePython.Text = "label2";
+            this.textGeneratePython.ForeColor = System.Drawing.Color.Gray;
+            this.textGeneratePython.Text = "translated python appears here..";
             // 
             // btnGenerate
             // 
@@ -115,7 +116,8 @@ namespace pppl_uml_python
             this.textBox1.TabIndex = 2;
             // 
             // bt_copyPy
-            // 
+            //
+            this.bt_copyPy.Enabled = false;
             this.bt_copyPy.Location = new System.Drawing.Point(416, 419);
             this.bt_copyPy.Name = "bt_copyPy";
             this.bt_copyPy.Size = new System.Drawing.Size(113, 33);
@@ -125,7 +127,8 @@ namespace pppl_uml_python
             this.bt_copyPy.Click += new System.EventHandler(this.bt_copyPy_Click);
             // 
             // bt_copyJSON
-            // 
+            //
+            this.bt_copyJSON.Enabled = false;
             this.bt_copyJSON.Location = new System.Drawing.Point(26, 419);
             this.bt_copyJSON.Name = "bt_copyJSON";
             this.bt_copyJSON.Size = new System.Drawing.Size(186, 33);
@@ -135,7 +138,8 @@ namespace pppl_uml_python
             this.bt_copyJSON.Click += new System.EventHandler(this.bt_copyJSON_Click);
             // 
             // btExportPython
-            // 
+            //
+            this.btExportPython.Enabled = false;
             this.btExportPython.Location = new System.Drawing.Point(657, 419);
             this.btExportPython.Name = "btExportPython";
             this.btExportPython.Size = new System.Drawing.Size(115, 33);
