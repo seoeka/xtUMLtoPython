@@ -17,6 +17,7 @@ namespace pppl_uml_python
         public Form1()
         {
             InitializeComponent();
+            this.WindowState = FormWindowState.Maximized;
         }
 
         private string selectedFilePath;
