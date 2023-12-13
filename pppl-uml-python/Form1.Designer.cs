@@ -50,20 +50,22 @@ namespace pppl_uml_python
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(330, 23);
+            this.label1.Location = new System.Drawing.Point(660, 15);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(130, 13);
+            this.label1.Size = new System.Drawing.Size(130, 25);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Generate JSON to Python";
+            this.label1.Text = "Convert JSON to Python";
+            this.label1.Font = new System.Drawing.Font(this.label1.Font.FontFamily, 18);
+
             // 
             // panel1
             // 
             this.panel1.AutoScroll = true;
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel1.Controls.Add(this.textGeneratePython);
-            this.panel1.Location = new System.Drawing.Point(416, 56);
+            this.panel1.Location = new System.Drawing.Point(840, 60);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(358, 347);
+            this.panel1.Size = new System.Drawing.Size(650, 650);
             this.panel1.TabIndex = 1;
             // 
             // textGeneratePython
@@ -74,23 +76,24 @@ namespace pppl_uml_python
             this.textGeneratePython.Size = new System.Drawing.Size(35, 13);
             this.textGeneratePython.TabIndex = 0;
             this.textGeneratePython.ForeColor = System.Drawing.Color.Gray;
-            this.textGeneratePython.Text = "translated python appears here..";
+            this.textGeneratePython.Text = "translated python appears here...";
+            this.textGeneratePython.Font = new System.Drawing.Font(this.textGeneratePython.Font.FontFamily, 10);
             // 
             // btnGenerate
             // 
-            this.btnGenerate.Location = new System.Drawing.Point(218, 419);
+            this.btnGenerate.Location = new System.Drawing.Point(20, 110);
             this.btnGenerate.Name = "btnGenerate";
-            this.btnGenerate.Size = new System.Drawing.Size(178, 33);
+            this.btnGenerate.Size = new System.Drawing.Size(125, 35);
             this.btnGenerate.TabIndex = 4;
-            this.btnGenerate.Text = "Generate to Python";
+            this.btnGenerate.Text = "Generate";
             this.btnGenerate.UseVisualStyleBackColor = true;
             this.btnGenerate.Click += new System.EventHandler(this.btnGenerate_Click);
             // 
             // btnClear
             // 
-            this.btnClear.Location = new System.Drawing.Point(535, 419);
+            this.btnClear.Location = new System.Drawing.Point(20, 625);
             this.btnClear.Name = "btnClear";
-            this.btnClear.Size = new System.Drawing.Size(115, 33);
+            this.btnClear.Size = new System.Drawing.Size(125, 35);
             this.btnClear.TabIndex = 6;
             this.btnClear.Text = "Clear All Data";
             this.btnClear.UseVisualStyleBackColor = true;
@@ -98,9 +101,9 @@ namespace pppl_uml_python
             // 
             // btnUpload
             // 
-            this.btnUpload.Location = new System.Drawing.Point(26, 12);
+            this.btnUpload.Location = new System.Drawing.Point(20, 60);
             this.btnUpload.Name = "btnUpload";
-            this.btnUpload.Size = new System.Drawing.Size(123, 33);
+            this.btnUpload.Size = new System.Drawing.Size(125, 35);
             this.btnUpload.TabIndex = 1;
             this.btnUpload.Text = "Upload File";
             this.btnUpload.UseVisualStyleBackColor = true;
@@ -108,31 +111,32 @@ namespace pppl_uml_python
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(26, 56);
+            this.textBox1.Location = new System.Drawing.Point(160, 60);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
-            this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textBox1.Size = new System.Drawing.Size(370, 346);
+            this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.textBox1.Size = new System.Drawing.Size(650, 650);
             this.textBox1.TabIndex = 2;
             this.textBox1.WordWrap = false;
+            this.textBox1.Font = new System.Drawing.Font(this.textBox1.Font.FontFamily, 10);
             // 
             // bt_copyPy
             //
             this.bt_copyPy.Enabled = false;
-            this.bt_copyPy.Location = new System.Drawing.Point(416, 419);
+            this.bt_copyPy.Location = new System.Drawing.Point(840, 725);
             this.bt_copyPy.Name = "bt_copyPy";
-            this.bt_copyPy.Size = new System.Drawing.Size(113, 33);
+            this.bt_copyPy.Size = new System.Drawing.Size(150, 35);
             this.bt_copyPy.TabIndex = 5;
-            this.bt_copyPy.Text = "Copy Code";
+            this.bt_copyPy.Text = "Copy Python";
             this.bt_copyPy.UseVisualStyleBackColor = true;
             this.bt_copyPy.Click += new System.EventHandler(this.bt_copyPy_Click);
             // 
             // bt_copyJSON
             //
             this.bt_copyJSON.Enabled = false;
-            this.bt_copyJSON.Location = new System.Drawing.Point(26, 419);
+            this.bt_copyJSON.Location = new System.Drawing.Point(160, 725);
             this.bt_copyJSON.Name = "bt_copyJSON";
-            this.bt_copyJSON.Size = new System.Drawing.Size(186, 33);
+            this.bt_copyJSON.Size = new System.Drawing.Size(150, 35);
             this.bt_copyJSON.TabIndex = 3;
             this.bt_copyJSON.Text = "Copy JSON";
             this.bt_copyJSON.UseVisualStyleBackColor = true;
@@ -141,9 +145,9 @@ namespace pppl_uml_python
             // btExportPython
             //
             this.btExportPython.Enabled = false;
-            this.btExportPython.Location = new System.Drawing.Point(657, 419);
+            this.btExportPython.Location = new System.Drawing.Point(20, 675);
             this.btExportPython.Name = "btExportPython";
-            this.btExportPython.Size = new System.Drawing.Size(115, 33);
+            this.btExportPython.Size = new System.Drawing.Size(125, 35);
             this.btExportPython.TabIndex = 8;
             this.btExportPython.Text = "Export";
             this.btExportPython.UseVisualStyleBackColor = true;
@@ -151,7 +155,7 @@ namespace pppl_uml_python
             // 
             // btHelp
             // 
-            this.btHelp.Location = new System.Drawing.Point(674, 12);
+            this.btHelp.Location = new System.Drawing.Point(1390, 15);
             this.btHelp.Name = "btHelp";
             this.btHelp.Size = new System.Drawing.Size(100, 33);
             this.btHelp.TabIndex = 8;
