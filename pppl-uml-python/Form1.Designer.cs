@@ -1,4 +1,4 @@
-﻿namespace pppl_uml_python
+namespace pppl_uml_python
 {
     partial class Form1
     {
@@ -38,7 +38,7 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.bt_copyPy = new System.Windows.Forms.Button();
             this.bt_copyJSON = new System.Windows.Forms.Button();
-            this.btSave = new System.Windows.Forms.Button();
+            this.btExportPython = new System.Windows.Forms.Button();
             this.btHelp = new System.Windows.Forms.Button();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.howToMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -73,7 +73,8 @@
             this.textGeneratePython.Name = "textGeneratePython";
             this.textGeneratePython.Size = new System.Drawing.Size(35, 13);
             this.textGeneratePython.TabIndex = 0;
-            this.textGeneratePython.Text = "label2";
+            this.textGeneratePython.ForeColor = System.Drawing.Color.Gray;
+            this.textGeneratePython.Text = "translated python appears here..";
             // 
             // btnGenerate
             // 
@@ -89,7 +90,7 @@
             // 
             this.btnClear.Location = new System.Drawing.Point(535, 419);
             this.btnClear.Name = "btnClear";
-            this.btnClear.Size = new System.Drawing.Size(107, 33);
+            this.btnClear.Size = new System.Drawing.Size(115, 33);
             this.btnClear.TabIndex = 6;
             this.btnClear.Text = "Clear All Data";
             this.btnClear.UseVisualStyleBackColor = true;
@@ -113,9 +114,11 @@
             this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.textBox1.Size = new System.Drawing.Size(370, 346);
             this.textBox1.TabIndex = 2;
+            this.textBox1.WordWrap = false;
             // 
             // bt_copyPy
-            // 
+            //
+            this.bt_copyPy.Enabled = false;
             this.bt_copyPy.Location = new System.Drawing.Point(416, 419);
             this.bt_copyPy.Name = "bt_copyPy";
             this.bt_copyPy.Size = new System.Drawing.Size(113, 33);
@@ -125,7 +128,8 @@
             this.bt_copyPy.Click += new System.EventHandler(this.bt_copyPy_Click);
             // 
             // bt_copyJSON
-            // 
+            //
+            this.bt_copyJSON.Enabled = false;
             this.bt_copyJSON.Location = new System.Drawing.Point(26, 419);
             this.bt_copyJSON.Name = "bt_copyJSON";
             this.bt_copyJSON.Size = new System.Drawing.Size(186, 33);
@@ -134,14 +138,16 @@
             this.bt_copyJSON.UseVisualStyleBackColor = true;
             this.bt_copyJSON.Click += new System.EventHandler(this.bt_copyJSON_Click);
             // 
-            // btSave
-            // 
-            this.btSave.Location = new System.Drawing.Point(648, 419);
-            this.btSave.Name = "btSave";
-            this.btSave.Size = new System.Drawing.Size(126, 33);
-            this.btSave.TabIndex = 7;
-            this.btSave.Text = "Save";
-            this.btSave.UseVisualStyleBackColor = true;
+            // btExportPython
+            //
+            this.btExportPython.Enabled = false;
+            this.btExportPython.Location = new System.Drawing.Point(657, 419);
+            this.btExportPython.Name = "btExportPython";
+            this.btExportPython.Size = new System.Drawing.Size(115, 33);
+            this.btExportPython.TabIndex = 8;
+            this.btExportPython.Text = "Export";
+            this.btExportPython.UseVisualStyleBackColor = true;
+            this.btExportPython.Click += new System.EventHandler(this.btExportPython_Click);
             // 
             // btHelp
             // 
@@ -181,7 +187,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 475);
             this.Controls.Add(this.btHelp);
-            this.Controls.Add(this.btSave);
+            this.Controls.Add(this.btExportPython);
             this.Controls.Add(this.bt_copyJSON);
             this.Controls.Add(this.bt_copyPy);
             this.Controls.Add(this.btnUpload);
@@ -212,11 +218,10 @@
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button bt_copyPy;
         private System.Windows.Forms.Button bt_copyJSON;
-        private System.Windows.Forms.Button btSave;
+        private System.Windows.Forms.Button btExportPython;
         private System.Windows.Forms.Button btHelp;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem howToMenuItem;
         private System.Windows.Forms.ToolStripMenuItem documentationMenuItem;
     }
 }
-
