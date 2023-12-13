@@ -52,7 +52,7 @@ namespace pppl_uml_python
                 if (string.IsNullOrWhiteSpace(textBox1.Text))
                 {
                     MessageBox.Show("Please enter a JSON file first!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;  // Stop further execution
+                    return;
                 }
 
                 JObject jsonObject = JObject.Parse(textBox1.Text);
@@ -68,8 +68,10 @@ namespace pppl_uml_python
         private string GeneratePythonCode(JObject jsonObject)
         {
             StringBuilder pythonCodeBuilder = new StringBuilder();
-
             var modelArray = jsonObject["model"] as JArray;
+            pythonCodeBuilder.AppendLine($"# States"); pythonCodeBuilder.AppendLine();
+            GenerateStatesClass(jsonObject, pythonCodeBuilder); pythonCodeBuilder.AppendLine();
+            pythonCodeBuilder.AppendLine($"# Classes"); pythonCodeBuilder.AppendLine();
 
             if (modelArray != null)
             {
@@ -78,10 +80,8 @@ namespace pppl_uml_python
                     string className = classDefinition["class_name"]?.ToString();
                     string classAttributes = "";
                     string classAttrSelf = "";
-                    string classStates = "";
 
                     var attributesArray = classDefinition["attributes"] as JArray;
-                    var statesArray = classDefinition["states"] as JArray;
 
                     if (attributesArray != null)
                     {
@@ -93,23 +93,25 @@ namespace pppl_uml_python
                             if (!string.IsNullOrEmpty(attributeName) && !string.IsNullOrEmpty(dataType))
                             {
                                 string pythonDataType = ConvertCSharpToPythonDataType(dataType);
-
-                                if (attribute["attribute_type"]?.ToString() == "naming_attribute" )
+                                string defaultValue = attribute["default_value"]?.ToString() ?? GetDefaultPythonValue(pythonDataType);
+                                if (attributeName == "status")
                                 {
-                                    string defaultValue = attribute["default_value"]?.ToString() ?? GetDefaultPythonValue(pythonDataType);
+                                    defaultValue = "states.aktif";
+                                }
+
+                                if (attribute["attribute_type"]?.ToString() == "naming_attribute")
+                                {
                                     classAttributes += $"{attributeName}: {defaultValue}, ";
                                     classAttrSelf += $"        self.{attributeName} = {attributeName} # Primary Key {Environment.NewLine}";
 
                                 }
                                 else if (attribute["attribute_type"]?.ToString() == "referential_attribute")
                                 {
-                                    string defaultValue = attribute["default_value"]?.ToString() ?? GetDefaultPythonValue(pythonDataType);
                                     classAttributes += $"{attributeName} : {defaultValue}, ";
                                     classAttrSelf += $"        self.{attributeName} = {attributeName} # Foreign Key {Environment.NewLine}";
                                 }
                                 else if (attribute["attribute_type"]?.ToString() == "descriptive_attribute")
                                 {
-                                    string defaultValue = attribute["default_value"]?.ToString() ?? GetDefaultPythonValue(pythonDataType);
                                     classAttributes += $"{attributeName} : {defaultValue}, ";
                                     classAttrSelf += $"        self.{attributeName} = {attributeName}{Environment.NewLine}";
                                 }
@@ -117,56 +119,58 @@ namespace pppl_uml_python
                         }
                     }
 
-                    if (statesArray != null)
-                    {
-                        foreach (var state in statesArray)
-                        {
-                            string stateName = state["state_name"]?.ToString();
-                            string stateValue = state["state_value"]?.ToString();
-                            var stateEvents = state["state_event"] as JArray;
-
-                            if (!string.IsNullOrEmpty(stateName) && stateEvents != null && stateEvents.Count > 0)
-                            {
-                                int stateEventLength = stateEvents.Count;
-
-                                for (int i = 0; i < stateEventLength; i++)
-                                {
-                                    string stateEvent = stateEvents[i]?.ToString();
-
-                                    int eventIndex = i + 1;
-
-                                    classStates += $"\n    def {stateEvent}(self):";
-                                    classStates += $"\n        self.{stateName} = \"{stateValue}\"";
-
-                                    if (eventIndex < stateEventLength)
-                                    {
-                                        classStates += "\n";
-                                    }
-                                }
-                                classStates += "\n";
-                            }
-                        }
-                    }
-
-
                     if (!string.IsNullOrEmpty(className))
                     {
                         if (classAttributes.EndsWith(", "))
                         {
                             classAttributes = classAttributes.Substring(0, classAttributes.Length - 2);
                         }
-
                         pythonCodeBuilder.AppendLine($"class {className}:");
                         pythonCodeBuilder.AppendLine($"    def __init__(self, {classAttributes}):");
                         pythonCodeBuilder.AppendLine($"{classAttrSelf}");
-                        pythonCodeBuilder.AppendLine($"{classStates}");
                     }
+
                 }
                 pythonCodeBuilder.AppendLine($"# Association");
                 GenerateAssociationClasses(jsonObject, pythonCodeBuilder);
+                GenerateRelation(jsonObject, pythonCodeBuilder);
             }
 
             return pythonCodeBuilder.ToString();
+        }
+
+        private void GenerateStatesClass(JObject jsonObject, StringBuilder pythonCodeBuilder)
+        {
+            var allStates = new HashSet<string>(); // Using HashSet to avoid duplicates
+
+            var modelArray = jsonObject["model"] as JArray;
+
+            pythonCodeBuilder.AppendLine($"class State:");
+            pythonCodeBuilder.AppendLine($"    def __init__(self, name: str, value: str):");
+            pythonCodeBuilder.AppendLine($"        self.name = name");
+            pythonCodeBuilder.AppendLine($"        self.value = value");
+            pythonCodeBuilder.AppendLine();
+            pythonCodeBuilder.AppendLine($"class states:");
+
+            if (modelArray != null)
+            {
+                foreach (var classDefinition in modelArray)
+                {
+                    var statesArray = classDefinition["states"] as JArray;
+
+                    if (statesArray != null)
+                    {
+                        foreach (var state in statesArray)
+                        {
+                            string stateName = state["state_name"]?.ToString();
+                            if (!string.IsNullOrEmpty(stateName) && allStates.Add(stateName))
+                            {
+                                pythonCodeBuilder.AppendLine($"    {stateName} = State(\"{stateName}\", \"{state["state_value"]}\")");
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         private void GenerateAssociationClasses(JObject jsonObject, StringBuilder pythonCodeBuilder)
@@ -182,39 +186,94 @@ namespace pppl_uml_python
                 if (associationClass != null)
                 {
                     string associationClassName = associationClass["class_name"]?.ToString();
-                    string associationClassKeyLetters = associationClass["KL"]?.ToString();
                     string associationClassAttributes = "";
+                    string associationClassAttrSelf = "";
 
                     var associationAttributesArray = associationClass["attributes"] as JArray;
 
                     if (!string.IsNullOrEmpty(associationClassName))
                     {
-                        if (associationClassAttributes.EndsWith(", "))
-                        {
-                            associationClassAttributes = associationClassAttributes.Substring(0, associationClassAttributes.Length - 2);
-                        }
-
                         pythonCodeBuilder.AppendLine();
-                        pythonCodeBuilder.AppendLine($"class {associationClassName}:");
-                        pythonCodeBuilder.AppendLine($"    def __init__(self, {associationClassAttributes}):");
 
-                        foreach (var attribute in associationAttributesArray)
+                        for (int i = 0; i < associationAttributesArray.Count; i++)
                         {
+                            var attribute = associationAttributesArray[i];
+                            string dataType = attribute["data_type"]?.ToString();
                             string attributeName = attribute["attribute_name"]?.ToString();
+                            string pythonDataType = ConvertCSharpToPythonDataType(dataType);
+
                             if (attribute["attribute_type"]?.ToString() == "naming_attribute")
                             {
-                                pythonCodeBuilder.AppendLine($"        self.{attributeName} = {attributeName} # PK ");
+                                string defaultValue = attribute["default_value"]?.ToString() ?? GetDefaultPythonValue(pythonDataType);
+                                associationClassAttributes += $"{attributeName}: {defaultValue}";
+
+                                if (i < associationAttributesArray.Count - 1)
+                                {
+                                    associationClassAttributes += ", ";
+                                }
+                                associationClassAttrSelf += $"        self.{attributeName} = {attributeName} # Primary Key {Environment.NewLine}";
                             }
                             else if (attribute["attribute_type"]?.ToString() == "referential_attribute")
                             {
-                                pythonCodeBuilder.AppendLine($"        self.{attributeName} = {attributeName} # FK");
+                                string defaultValue = attribute["default_value"]?.ToString() ?? GetDefaultPythonValue(pythonDataType);
+                                associationClassAttributes += $"{attributeName}: {defaultValue}";
+                                if (i < associationAttributesArray.Count - 1)
+                                {
+                                    associationClassAttributes += ", ";
+                                }
+                                associationClassAttrSelf += $"        self.{attributeName} = {attributeName} # Foreign Key {Environment.NewLine}";
                             }
                         }
-                        pythonCodeBuilder.AppendLine();
+
+                        pythonCodeBuilder.AppendLine($"class {associationClassName}:");
+                        pythonCodeBuilder.AppendLine($"    def __init__(self, {associationClassAttributes}):");
+                        pythonCodeBuilder.AppendLine($"{associationClassAttrSelf}");
                     }
                 }
             }
         }
+
+        private void GenerateRelation(JObject jsonObject, StringBuilder pythonCodeBuilder)
+        {
+            var allStates = new HashSet<string>(); // Using HashSet to avoid duplicates
+
+            var modelArray = jsonObject["model"] as JArray;
+
+            pythonCodeBuilder.AppendLine($"class Association:");
+            pythonCodeBuilder.AppendLine($"    def __init__(self, class1: str, class2: str, multiplicity):");
+            pythonCodeBuilder.AppendLine($"        self.class1 = class1");
+            pythonCodeBuilder.AppendLine($"        self.class2 = class2");
+            pythonCodeBuilder.AppendLine($"        self.multiplicity = multiplicity");
+            pythonCodeBuilder.AppendLine();
+            pythonCodeBuilder.AppendLine($"class MainAssociation:");
+
+            if (modelArray != null)
+            {
+                foreach (var classDefinition in modelArray)
+                {
+                    string associationName = classDefinition["name"]?.ToString();
+
+                    if (associationName != null && classDefinition["type"]?.ToString() == "association")
+                    {
+                        var classArray = classDefinition["class"] as JArray;
+
+                        if (classArray != null && classArray.Count == 2)
+                        {
+                            string class1 = classArray[0]["class_name"]?.ToString();
+                            string class2 = classArray[1]["class_name"]?.ToString();
+                            string multiplicity = classArray[0]["class_multiplicity"]?.ToString();
+
+                            if (!string.IsNullOrEmpty(class1) && !string.IsNullOrEmpty(class2) && !string.IsNullOrEmpty(multiplicity))
+                            {
+                                pythonCodeBuilder.AppendLine($"    {associationName} = Association(\"{class1}\", \"{class2}\", \"{multiplicity}\")");
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+
 
 
         private string GetDefaultPythonValue(string pythonDataType)
@@ -288,7 +347,7 @@ namespace pppl_uml_python
 
         private void documentationMenuItem_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show("Are you sure you want to open the Online Notes?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            DialogResult result = MessageBox.Show("Are you sure you want to open the Documentation?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
             if (result == DialogResult.Yes)
             {
