@@ -1,4 +1,4 @@
-﻿namespace pppl_uml_python
+namespace pppl_uml_python
 {
     partial class Form1
     {
@@ -38,7 +38,7 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.bt_copyPy = new System.Windows.Forms.Button();
             this.bt_copyJSON = new System.Windows.Forms.Button();
-            this.btSave = new System.Windows.Forms.Button();
+            this.btExportPython = new System.Windows.Forms.Button();
             this.btHelp = new System.Windows.Forms.Button();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.howToMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -89,7 +89,7 @@
             // 
             this.btnClear.Location = new System.Drawing.Point(535, 419);
             this.btnClear.Name = "btnClear";
-            this.btnClear.Size = new System.Drawing.Size(107, 33);
+            this.btnClear.Size = new System.Drawing.Size(115, 33);
             this.btnClear.TabIndex = 6;
             this.btnClear.Text = "Clear All Data";
             this.btnClear.UseVisualStyleBackColor = true;
@@ -134,14 +134,15 @@
             this.bt_copyJSON.UseVisualStyleBackColor = true;
             this.bt_copyJSON.Click += new System.EventHandler(this.bt_copyJSON_Click);
             // 
-            // btSave
+            // btExportPython
             // 
-            this.btSave.Location = new System.Drawing.Point(648, 419);
-            this.btSave.Name = "btSave";
-            this.btSave.Size = new System.Drawing.Size(126, 33);
-            this.btSave.TabIndex = 7;
-            this.btSave.Text = "Save";
-            this.btSave.UseVisualStyleBackColor = true;
+            this.btExportPython.Location = new System.Drawing.Point(657, 419);
+            this.btExportPython.Name = "btExportPython";
+            this.btExportPython.Size = new System.Drawing.Size(115, 33);
+            this.btExportPython.TabIndex = 8;
+            this.btExportPython.Text = "Export";
+            this.btExportPython.UseVisualStyleBackColor = true;
+            this.btExportPython.Click += new System.EventHandler(this.btExportPython_Click);
             // 
             // btHelp
             // 
@@ -181,7 +182,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 475);
             this.Controls.Add(this.btHelp);
-            this.Controls.Add(this.btSave);
+            this.Controls.Add(this.btExportPython);
             this.Controls.Add(this.bt_copyJSON);
             this.Controls.Add(this.bt_copyPy);
             this.Controls.Add(this.btnUpload);
@@ -212,11 +213,10 @@
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button bt_copyPy;
         private System.Windows.Forms.Button bt_copyJSON;
-        private System.Windows.Forms.Button btSave;
+        private System.Windows.Forms.Button btExportPython;
         private System.Windows.Forms.Button btHelp;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem howToMenuItem;
         private System.Windows.Forms.ToolStripMenuItem documentationMenuItem;
     }
 }
-
