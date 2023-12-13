@@ -8,6 +8,7 @@ using System.IO;
 using System.Windows.Forms;
 using System.Xml.Linq;
 using System.Linq;
+using System.Drawing;
 
 namespace pppl_uml_python
 {
@@ -97,14 +98,14 @@ namespace pppl_uml_python
                                 {
                                     string defaultValue = attribute["default_value"]?.ToString() ?? GetDefaultPythonValue(pythonDataType);
                                     classAttributes += $"{attributeName}: {defaultValue}, ";
-                                    classAttrSelf += $"        self.{attributeName} = {attributeName} # PK {Environment.NewLine}";
+                                    classAttrSelf += $"        self.{attributeName} = {attributeName} # Primary Key {Environment.NewLine}";
 
                                 }
                                 else if (attribute["attribute_type"]?.ToString() == "referential_attribute")
                                 {
                                     string defaultValue = attribute["default_value"]?.ToString() ?? GetDefaultPythonValue(pythonDataType);
                                     classAttributes += $"{attributeName} : {defaultValue}, ";
-                                    classAttrSelf += $"        self.{attributeName} = {attributeName} # FK {Environment.NewLine}";
+                                    classAttrSelf += $"        self.{attributeName} = {attributeName} # Foreign Key {Environment.NewLine}";
                                 }
                                 else if (attribute["attribute_type"]?.ToString() == "descriptive_attribute")
                                 {
@@ -209,7 +210,6 @@ namespace pppl_uml_python
                                 pythonCodeBuilder.AppendLine($"        self.{attributeName} = {attributeName} # FK");
                             }
                         }
-
                         pythonCodeBuilder.AppendLine();
                     }
                 }
@@ -267,6 +267,33 @@ namespace pppl_uml_python
         {
             textBox1.Clear();
             textGeneratePython.Text = string.Empty;
+        }
+
+        private void btHelp_Click(object sender, EventArgs e)
+        {
+            contextMenuStrip1.Show(btHelp, new Point(0, btHelp.Height));
+
+        }
+
+        private void howToMenuItem_Click(object sender, EventArgs e)
+        {
+            string message = "How to Use the Application:\n\n";
+            message += "1. Upload your JSON file\n";
+            message += "2. Click the 'Generate to Python' button to generate the json into Python\n";
+            message += "3. The result will be displayed on the screen\n";
+            message += "4. If you want to save the result to a Python file, please click the 'Save' button";
+
+            MessageBox.Show(message, "How to Use the Application", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void documentationMenuItem_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("Are you sure you want to open the Online Notes?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (result == DialogResult.Yes)
+            {
+                System.Diagnostics.Process.Start("https://github.com/seoeka/pppl-uml-python/blob/master/README.md");
+            }
         }
     }
 }

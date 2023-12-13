@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.textGeneratePython = new System.Windows.Forms.Label();
@@ -37,7 +38,13 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.bt_copyPy = new System.Windows.Forms.Button();
             this.bt_copyJSON = new System.Windows.Forms.Button();
+            this.btSave = new System.Windows.Forms.Button();
+            this.btHelp = new System.Windows.Forms.Button();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.howToMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.documentationMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1.SuspendLayout();
+            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -80,9 +87,9 @@
             // 
             // btnClear
             // 
-            this.btnClear.Location = new System.Drawing.Point(608, 419);
+            this.btnClear.Location = new System.Drawing.Point(535, 419);
             this.btnClear.Name = "btnClear";
-            this.btnClear.Size = new System.Drawing.Size(166, 33);
+            this.btnClear.Size = new System.Drawing.Size(107, 33);
             this.btnClear.TabIndex = 6;
             this.btnClear.Text = "Clear All Data";
             this.btnClear.UseVisualStyleBackColor = true;
@@ -111,7 +118,7 @@
             // 
             this.bt_copyPy.Location = new System.Drawing.Point(416, 419);
             this.bt_copyPy.Name = "bt_copyPy";
-            this.bt_copyPy.Size = new System.Drawing.Size(186, 33);
+            this.bt_copyPy.Size = new System.Drawing.Size(113, 33);
             this.bt_copyPy.TabIndex = 5;
             this.bt_copyPy.Text = "Copy Code";
             this.bt_copyPy.UseVisualStyleBackColor = true;
@@ -127,11 +134,54 @@
             this.bt_copyJSON.UseVisualStyleBackColor = true;
             this.bt_copyJSON.Click += new System.EventHandler(this.bt_copyJSON_Click);
             // 
+            // btSave
+            // 
+            this.btSave.Location = new System.Drawing.Point(648, 419);
+            this.btSave.Name = "btSave";
+            this.btSave.Size = new System.Drawing.Size(126, 33);
+            this.btSave.TabIndex = 7;
+            this.btSave.Text = "Save";
+            this.btSave.UseVisualStyleBackColor = true;
+            // 
+            // btHelp
+            // 
+            this.btHelp.Location = new System.Drawing.Point(674, 12);
+            this.btHelp.Name = "btHelp";
+            this.btHelp.Size = new System.Drawing.Size(100, 33);
+            this.btHelp.TabIndex = 8;
+            this.btHelp.Text = "Help";
+            this.btHelp.UseVisualStyleBackColor = true;
+            this.btHelp.Click += new System.EventHandler(this.btHelp_Click);
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.howToMenuItem,
+            this.documentationMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(167, 48);
+            // 
+            // howToMenuItem
+            // 
+            this.howToMenuItem.Name = "howToMenuItem";
+            this.howToMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.howToMenuItem.Text = "How to Use";
+            this.howToMenuItem.Click += new System.EventHandler(this.howToMenuItem_Click);
+            // 
+            // documentationMenuItem
+            // 
+            this.documentationMenuItem.Name = "documentationMenuItem";
+            this.documentationMenuItem.Size = new System.Drawing.Size(166, 22);
+            this.documentationMenuItem.Text = "Documentation...";
+            this.documentationMenuItem.Click += new System.EventHandler(this.documentationMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 475);
+            this.Controls.Add(this.btHelp);
+            this.Controls.Add(this.btSave);
             this.Controls.Add(this.bt_copyJSON);
             this.Controls.Add(this.bt_copyPy);
             this.Controls.Add(this.btnUpload);
@@ -145,6 +195,7 @@
             this.Text = "UML to Python";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -161,6 +212,11 @@
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button bt_copyPy;
         private System.Windows.Forms.Button bt_copyJSON;
+        private System.Windows.Forms.Button btSave;
+        private System.Windows.Forms.Button btHelp;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem howToMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem documentationMenuItem;
     }
 }
 
