@@ -114,6 +114,7 @@ namespace pppl_uml_python
             this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.textBox1.Size = new System.Drawing.Size(370, 346);
             this.textBox1.TabIndex = 2;
+            this.textBox1.WordWrap = false;
             // 
             // bt_copyPy
             //
