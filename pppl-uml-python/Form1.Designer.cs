@@ -52,9 +52,9 @@ namespace pppl_uml_python
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(330, 23);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(130, 13);
+            this.label1.Size = new System.Drawing.Size(175, 13);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Generate JSON to Python";
+            this.label1.Text = "From xtUML JSON Model to Python";
             // 
             // panel1
             // 
@@ -69,11 +69,11 @@ namespace pppl_uml_python
             // textGeneratePython
             // 
             this.textGeneratePython.AutoSize = true;
+            this.textGeneratePython.ForeColor = System.Drawing.Color.Gray;
             this.textGeneratePython.Location = new System.Drawing.Point(3, 9);
             this.textGeneratePython.Name = "textGeneratePython";
-            this.textGeneratePython.Size = new System.Drawing.Size(35, 13);
+            this.textGeneratePython.Size = new System.Drawing.Size(159, 13);
             this.textGeneratePython.TabIndex = 0;
-            this.textGeneratePython.ForeColor = System.Drawing.Color.Gray;
             this.textGeneratePython.Text = "translated python appears here..";
             // 
             // btnGenerate
@@ -117,7 +117,7 @@ namespace pppl_uml_python
             this.textBox1.WordWrap = false;
             // 
             // bt_copyPy
-            //
+            // 
             this.bt_copyPy.Enabled = false;
             this.bt_copyPy.Location = new System.Drawing.Point(416, 419);
             this.bt_copyPy.Name = "bt_copyPy";
@@ -128,7 +128,7 @@ namespace pppl_uml_python
             this.bt_copyPy.Click += new System.EventHandler(this.bt_copyPy_Click);
             // 
             // bt_copyJSON
-            //
+            // 
             this.bt_copyJSON.Enabled = false;
             this.bt_copyJSON.Location = new System.Drawing.Point(26, 419);
             this.bt_copyJSON.Name = "bt_copyJSON";
@@ -139,7 +139,7 @@ namespace pppl_uml_python
             this.bt_copyJSON.Click += new System.EventHandler(this.bt_copyJSON_Click);
             // 
             // btExportPython
-            //
+            // 
             this.btExportPython.Enabled = false;
             this.btExportPython.Location = new System.Drawing.Point(657, 419);
             this.btExportPython.Name = "btExportPython";
@@ -170,7 +170,7 @@ namespace pppl_uml_python
             // howToMenuItem
             // 
             this.howToMenuItem.Name = "howToMenuItem";
-            this.howToMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.howToMenuItem.Size = new System.Drawing.Size(166, 22);
             this.howToMenuItem.Text = "How to Use";
             this.howToMenuItem.Click += new System.EventHandler(this.howToMenuItem_Click);
             // 
@@ -198,7 +198,7 @@ namespace pppl_uml_python
             this.Controls.Add(this.label1);
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "UML to Python";
+            this.Text = "xtUML JSON Model ";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.contextMenuStrip1.ResumeLayout(false);

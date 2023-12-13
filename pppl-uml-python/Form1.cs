@@ -56,18 +56,14 @@ namespace pppl_uml_python
                 {
                     MessageBox.Show("Please enter a JSON file first!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
-                    MessageBox.Show("Please upload a JSON file first!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;  // Stop further execution
                 }
 
                 JObject jsonObject = JObject.Parse(textBox1.Text);
                 string pythonCode = GeneratePythonCode(jsonObject);
                 textGeneratePython.Text = pythonCode;
 
-                // Set isPythonGenerated to true
                 isPythonGenerated = true;
 
-                // Enable the Export to Python File button
                 btExportPython.Enabled = true;
                 bt_copyPy.Enabled = true;
                 textGeneratePython.ForeColor = System.Drawing.Color.Black;
@@ -111,7 +107,6 @@ namespace pppl_uml_python
                                 {
                                     defaultValue = "states.aktif";
                                 }
-
                                 if (attribute["attribute_type"]?.ToString() == "naming_attribute")
                                 {
                                     classAttributes += $"{attributeName}: {defaultValue}, ";
@@ -348,10 +343,8 @@ namespace pppl_uml_python
 
         private void ClearPythonOutput()
         {
-            // Hapus output Python
             textGeneratePython.Text = string.Empty;
 
-            // Tampilkan kembali teks placeholder
             textGeneratePython.ForeColor = System.Drawing.Color.Gray;
             textGeneratePython.Text = PlaceholderText;
         }
@@ -368,7 +361,7 @@ namespace pppl_uml_python
             message += "1. Upload your JSON file\n";
             message += "2. Click the 'Generate to Python' button to generate the json into Python\n";
             message += "3. The result will be displayed on the screen\n";
-            message += "4. If you want to save the result to a Python file, please click the 'Save' button";
+            message += "4. If you want to Export the result to a Python file, please click the 'Export' button";
 
             MessageBox.Show(message, "How to Use the Application", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
