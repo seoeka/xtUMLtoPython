@@ -31,6 +31,7 @@ namespace pppl_uml_python
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     selectedFilePath = openFileDialog.FileName;
+                    bt_copyJSON.Enabled = true;
 
                     try
                     {
@@ -45,6 +46,8 @@ namespace pppl_uml_python
             }
         }
 
+        private bool isPythonGenerated = false;
+
         private void btnGenerate_Click(object sender, EventArgs e)
         {
             try
@@ -58,6 +61,14 @@ namespace pppl_uml_python
                 JObject jsonObject = JObject.Parse(textBox1.Text);
                 string pythonCode = GeneratePythonCode(jsonObject);
                 textGeneratePython.Text = pythonCode;
+
+                // Set isPythonGenerated to true
+                isPythonGenerated = true;
+
+                // Enable the Export to Python File button
+                btExportPython.Enabled = true;
+                bt_copyPy.Enabled = true;
+                textGeneratePython.ForeColor = System.Drawing.Color.Black;
             }
             catch (Exception ex)
             {
@@ -263,10 +274,25 @@ namespace pppl_uml_python
             MessageBox.Show("JSON content copied to clipboard!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
+        private const string PlaceholderText = "translated python appears here..";
+
         private void btnClear_Click(object sender, EventArgs e)
         {
+            bt_copyJSON.Enabled = false;
+            bt_copyPy.Enabled = false;
+            btExportPython.Enabled = false;
             textBox1.Clear();
+            ClearPythonOutput();
+        }
+
+        private void ClearPythonOutput()
+        {
+            // Hapus output Python
             textGeneratePython.Text = string.Empty;
+
+            // Tampilkan kembali teks placeholder
+            textGeneratePython.ForeColor = System.Drawing.Color.Gray;
+            textGeneratePython.Text = PlaceholderText;
         }
 
         private void btHelp_Click(object sender, EventArgs e)
