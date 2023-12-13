@@ -51,7 +51,7 @@ namespace pppl_uml_python
             {
                 if (string.IsNullOrWhiteSpace(textBox1.Text))
                 {
-                    MessageBox.Show("Please enter a JSON file first!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Please upload a JSON file first!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;  // Stop further execution
                 }
 
@@ -94,7 +94,7 @@ namespace pppl_uml_python
                             {
                                 string pythonDataType = ConvertCSharpToPythonDataType(dataType);
 
-                                if (attribute["attribute_type"]?.ToString() == "naming_attribute" )
+                                if (attribute["attribute_type"]?.ToString() == "naming_attribute")
                                 {
                                     string defaultValue = attribute["default_value"]?.ToString() ?? GetDefaultPythonValue(pythonDataType);
                                     classAttributes += $"{attributeName}: {defaultValue}, ";
@@ -295,5 +295,42 @@ namespace pppl_uml_python
                 System.Diagnostics.Process.Start("https://github.com/seoeka/pppl-uml-python/blob/master/README.md");
             }
         }
+
+        private void btExportPython_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(textBox1.Text))
+            {
+                MessageBox.Show("Please upload a JSON file and generate Python code first!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;  // Stop further execution
+            }
+
+            if (string.IsNullOrWhiteSpace(textGeneratePython.Text))
+            {
+                MessageBox.Show("Please generate Python code first!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;  // Stop further execution
+            }
+
+            using (SaveFileDialog saveFileDialog = new SaveFileDialog())
+            {
+                saveFileDialog.Filter = "Python Files (*.py)|*.py|Text Files (*.txt)|*.txt|All Files (*.*)|*.*";
+                saveFileDialog.FilterIndex = 1;
+
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    string filePath = saveFileDialog.FileName;
+
+                    try
+                    {
+                        File.WriteAllText(filePath, textGeneratePython.Text);
+                        MessageBox.Show("Python code exported successfully!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Error exporting Python code: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+        }
+
     }
 }
