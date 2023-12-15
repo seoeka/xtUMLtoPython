@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 using System.Threading.Tasks;
 using System.IO;
 using System.Windows.Forms;
@@ -36,8 +37,11 @@ namespace pppl_uml_python
 
                     try
                     {
-                        string fileContent = File.ReadAllText(selectedFilePath);
-                        textBox1.Text = fileContent;
+                        // Menggunakan JToken untuk mendapatkan format yang diindensasi
+                        JToken parsedJson = JToken.Parse(File.ReadAllText(selectedFilePath));
+                        string formattedJson = parsedJson.ToString(Formatting.Indented);
+
+                        textBox1.Text = formattedJson;
                     }
                     catch (Exception ex)
                     {
