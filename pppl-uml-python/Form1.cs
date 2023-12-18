@@ -37,7 +37,6 @@ namespace pppl_uml_python
 
                     try
                     {
-                        // Menggunakan JToken untuk mendapatkan format yang diindensasi
                         JToken parsedJson = JToken.Parse(File.ReadAllText(selectedFilePath));
                         string formattedJson = parsedJson.ToString(Formatting.Indented);
 
@@ -86,14 +85,17 @@ namespace pppl_uml_python
             pythonCodeBuilder.AppendLine($"# States"); pythonCodeBuilder.AppendLine();
             GenerateStatesClass(jsonObject, pythonCodeBuilder); pythonCodeBuilder.AppendLine();
             pythonCodeBuilder.AppendLine($"# Classes"); pythonCodeBuilder.AppendLine();
+            var allStates = new HashSet<string>();
 
             if (modelArray != null)
             {
                 foreach (var classDefinition in modelArray)
                 {
                     string className = classDefinition["class_name"]?.ToString();
+                    var statesArray = classDefinition["states"] as JArray;
                     string classAttributes = "";
                     string classAttrSelf = "";
+                    string classEvents = "";
 
                     var attributesArray = classDefinition["attributes"] as JArray;
 
@@ -132,6 +134,28 @@ namespace pppl_uml_python
                         }
                     }
 
+                    if (statesArray != null)
+                    {
+                        foreach (var state in statesArray)
+                        {
+                            string stateName = state["state_name"]?.ToString();
+                            var stateEvents = state["state_event"] as JArray;
+                            if (!string.IsNullOrEmpty(stateName) && allStates.Add(stateName) && stateEvents != null)
+                            {
+                                foreach (var stateEvent in stateEvents)
+                                {
+                                    string eventName = stateEvent?.ToString();
+                                    if (!string.IsNullOrEmpty(eventName))
+                                    {
+                                        // Add the state event methods with the full event name
+                                        classEvents += $"    def {eventName}():{Environment.NewLine}";
+                                        classEvents += $"        states.{stateName}{Environment.NewLine}";
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    
                     if (!string.IsNullOrEmpty(className))
                     {
                         if (classAttributes.EndsWith(", "))
@@ -142,11 +166,11 @@ namespace pppl_uml_python
                         pythonCodeBuilder.AppendLine($"    def __init__(self, {classAttributes}):");
                         pythonCodeBuilder.AppendLine($"{classAttrSelf}");
                     }
-
+                    pythonCodeBuilder.AppendLine($"{classEvents}"); // Add this line
                 }
                 pythonCodeBuilder.AppendLine($"# Association");
                 GenerateAssociationClasses(jsonObject, pythonCodeBuilder);
-                GenerateRelation(jsonObject, pythonCodeBuilder);
+                // GenerateRelation(jsonObject, pythonCodeBuilder);
             }
 
             return pythonCodeBuilder.ToString();
@@ -154,7 +178,7 @@ namespace pppl_uml_python
 
         private void GenerateStatesClass(JObject jsonObject, StringBuilder pythonCodeBuilder)
         {
-            var allStates = new HashSet<string>(); // Using HashSet to avoid duplicates
+            var allStates = new HashSet<string>();
 
             var modelArray = jsonObject["model"] as JArray;
 
@@ -246,6 +270,8 @@ namespace pppl_uml_python
             }
         }
 
+        /*
+
         private void GenerateRelation(JObject jsonObject, StringBuilder pythonCodeBuilder)
         {
             var allStates = new HashSet<string>(); // Using HashSet to avoid duplicates
@@ -286,7 +312,7 @@ namespace pppl_uml_python
             }
         }
 
-
+        */
 
 
         private string GetDefaultPythonValue(string pythonDataType)
