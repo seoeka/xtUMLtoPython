@@ -16,35 +16,35 @@ Welcome to the documentation for the xtUML JSON to Python Translator application
 7. [Referential Attributes - Store as Part of Physical 50/50 + Look Up Across](#referential-attributes---store-as-part-of-physical-5050--look-up-across)
 8. [Derived Attributes - Derived for Each Access](#derived-attributes---derived-for-each-access)
 
-## Logical Organization
+### Logical Organization
 
 At the logical level, the xtUML JSON to Python Translator organizes information and functions into a conceptual structure, adhering to the principle of having one table/class per Object-Oriented Analysis (OOA) object.
 
-## Data Organization - Centralized
+### Data Organization - Centralized
 
 All data used by the application is stored and managed in a centralized manner, facilitating efficient access and data management.
 
-## Physical Organization - Direct Correspondence
+### Physical Organization - Direct Correspondence
 
 The physical structure of the application directly mirrors its logical structure, establishing a direct correspondence between logical elements and their physical representation in the system.
 
-## Memory Management - Operating System
+### Memory Management - Operating System
 
 The application relies on the memory management provided by the operating system to ensure efficient use of memory resources.
 
-## Instance Relationship - Relational or Object Oriented Approach
+### Instance Relationship - Relational or Object Oriented Approach
 
 In managing relationships between instances or objects, the application offers the flexibility to choose between a relational-oriented approach and an object-oriented approach, based on development needs.
 
-## Relationship Integrity - Require All Unconditional
+### Relationship Integrity - Require All Unconditional
 
 Integrity of relationships is maintained by ensuring that all relationships in the system meet unconditional requirements without exceptions.
 
-## Referential Attributes - Store as Part of Physical 50/50 + Look Up Across
+### Referential Attributes - Store as Part of Physical 50/50 + Look Up Across
 
 Referential attributes are stored partly as physical attributes and partly through lookup across data structures, creating a balanced approach.
 
-## Derived Attributes - Derived for Each Access
+### Derived Attributes - Derived for Each Access
 
 Derived attributes are calculated each time they are accessed, ensuring the accuracy of derived values without burdening physical storage.
 
