@@ -95,6 +95,7 @@ namespace pppl_uml_python
             this.label4.TabIndex = 0;
             this.label4.Text = "from xtUML JSON Model to Python";
             this.label4.Font = new System.Drawing.Font(this.label1.Font.FontFamily, 11);
+            this.label4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
             // 
             // panel1
             // 
