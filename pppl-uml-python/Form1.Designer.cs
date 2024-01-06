@@ -153,6 +153,7 @@ namespace pppl_uml_python
             this.btnUpload.UseVisualStyleBackColor = true;
             this.btnUpload.Click += new System.EventHandler(this.btnUpload_Click);
             this.btnUpload.Font = new System.Drawing.Font(this.btnUpload.Font.FontFamily, 9);
+            this.btnUpload.ForeColor = System.Drawing.Color.DarkTurquoise;
             // 
             // btnParse
             // 
@@ -163,6 +164,7 @@ namespace pppl_uml_python
             this.btnParse.Text = "Parse";
             this.btnParse.UseVisualStyleBackColor = true;
             this.btnParse.Font = new System.Drawing.Font(this.btnParse.Font.FontFamily, 9);
+            this.btnParse.ForeColor = System.Drawing.Color.DarkSalmon;
             // 
             // btnVisualize
             // 
@@ -185,6 +187,7 @@ namespace pppl_uml_python
             this.btnSimulate.Text = "Simulate";
             this.btnSimulate.UseVisualStyleBackColor = true;
             this.btnSimulate.Font = new System.Drawing.Font(this.btnSimulate.Font.FontFamily, 9);
+            this.btnSimulate.ForeColor = System.Drawing.Color.DarkTurquoise;
             // 
             // textBox1
             // 
@@ -207,7 +210,8 @@ namespace pppl_uml_python
             this.bt_copyPy.Text = "Copy Python";
             this.bt_copyPy.UseVisualStyleBackColor = true;
             this.bt_copyPy.Click += new System.EventHandler(this.bt_copyPy_Click);
-            this.bt_copyPy.Font = new System.Drawing.Font(this.bt_copyPy.Font.FontFamily, 9);
+            this.bt_copyPy.Font = new System.Drawing.Font(this.bt_copyPy.Font.FontFamily, 10);
+            this.bt_copyPy.ForeColor = System.Drawing.Color.DarkSalmon;
             // 
             // bt_copyJSON
             //
@@ -219,7 +223,8 @@ namespace pppl_uml_python
             this.bt_copyJSON.Text = "Copy JSON";
             this.bt_copyJSON.UseVisualStyleBackColor = true;
             this.bt_copyJSON.Click += new System.EventHandler(this.bt_copyJSON_Click);
-            this.bt_copyJSON.Font = new System.Drawing.Font(this.bt_copyJSON.Font.FontFamily, 9);
+            this.bt_copyJSON.Font = new System.Drawing.Font(this.bt_copyJSON.Font.FontFamily, 10);
+            this.bt_copyJSON.ForeColor = System.Drawing.Color.DarkTurquoise;
             // 
             // btExportPython
             //
@@ -232,6 +237,7 @@ namespace pppl_uml_python
             this.btExportPython.UseVisualStyleBackColor = true;
             this.btExportPython.Click += new System.EventHandler(this.btExportPython_Click);
             this.btExportPython.Font = new System.Drawing.Font(this.btExportPython.Font.FontFamily, 9);
+            this.btExportPython.ForeColor = System.Drawing.Color.DarkSalmon;
             // 
             // btHelp
             // 
