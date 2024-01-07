@@ -122,6 +122,7 @@ namespace pppl_uml_python
             this.textGeneratePython.Size = new System.Drawing.Size(219, 17);
             this.textGeneratePython.TabIndex = 0;
             this.textGeneratePython.Text = "translated python appears here...";
+            this.textGeneratePython.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.textGeneratePython_MouseDoubleClick);
             // 
             // btnGenerate
             // 

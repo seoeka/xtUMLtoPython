@@ -46,7 +46,6 @@ namespace pppl_uml_python
                 }
             }
         }
-        private bool isPythonGenerated = false;
         private void btnGenerate_Click(object sender, EventArgs e)
         {
             try
@@ -55,15 +54,10 @@ namespace pppl_uml_python
                 {
                     MessageBox.Show("Please enter a JSON file first!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
-                    MessageBox.Show("Please upload a JSON file first!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;  // Stop further execution
                 }
                 JObject jsonObject = JObject.Parse(textBox1.Text);
                 string pythonCode = GeneratePythonCode(jsonObject);
                 textGeneratePython.Text = pythonCode;
-                // Set isPythonGenerated to true
-                isPythonGenerated = true;
-                // Enable the Export to Python File button
                 btExportPython.Enabled = true;
                 bt_copyPy.Enabled = true;
                 textGeneratePython.ForeColor = System.Drawing.Color.Black;
@@ -77,8 +71,6 @@ namespace pppl_uml_python
         {
             StringBuilder pythonCodeBuilder = new StringBuilder();
             var modelArray = jsonObject["model"] as JArray;
-            pythonCodeBuilder.AppendLine($"# States"); pythonCodeBuilder.AppendLine();
-            GenerateStatesClass(jsonObject, pythonCodeBuilder); pythonCodeBuilder.AppendLine();
             pythonCodeBuilder.AppendLine($"# Classes"); pythonCodeBuilder.AppendLine();
             var allStates = new HashSet<string>();
             if (modelArray != null)
@@ -103,7 +95,7 @@ namespace pppl_uml_python
                                 string defaultValue = attribute["default_value"]?.ToString() ?? GetDefaultPythonValue(pythonDataType);
                                 if (attributeName == "status")
                                 {
-                                    defaultValue = "states.aktif";
+                                    defaultValue = "state";
                                 }
                                 if (attribute["attribute_type"]?.ToString() == "naming_attribute")
                                 {
@@ -136,7 +128,6 @@ namespace pppl_uml_python
                                     string eventName = stateEvent?.ToString();
                                     if (!string.IsNullOrEmpty(eventName))
                                     {
-                                        // Add the state event methods with the full event name
                                         classEvents += $"    def {eventName}():{Environment.NewLine}";
                                         classEvents += $"        states.{stateName}{Environment.NewLine}";
                                     }
@@ -154,11 +145,11 @@ namespace pppl_uml_python
                         pythonCodeBuilder.AppendLine($"    def __init__(self, {classAttributes}):");
                         pythonCodeBuilder.AppendLine($"{classAttrSelf}");
                     }
+                    GenerateStatesClass(jsonObject, pythonCodeBuilder); pythonCodeBuilder.AppendLine();
                     pythonCodeBuilder.AppendLine($"{classEvents}"); // Add this line
                 }
                 pythonCodeBuilder.AppendLine($"# Association");
                 GenerateAssociationClasses(jsonObject, pythonCodeBuilder);
-                GenerateRelation(jsonObject, pythonCodeBuilder);
             }
             return pythonCodeBuilder.ToString();
         }
@@ -166,12 +157,7 @@ namespace pppl_uml_python
         {
             var allStates = new HashSet<string>(); // Using HashSet to avoid duplicates
             var modelArray = jsonObject["model"] as JArray;
-            pythonCodeBuilder.AppendLine($"class State:");
-            pythonCodeBuilder.AppendLine($"    def __init__(self, name: str, value: str):");
-            pythonCodeBuilder.AppendLine($"        self.name = name");
-            pythonCodeBuilder.AppendLine($"        self.value = value");
-            pythonCodeBuilder.AppendLine();
-            pythonCodeBuilder.AppendLine($"class states:");
+            pythonCodeBuilder.AppendLine($"class state :");
             if (modelArray != null)
             {
                 foreach (var classDefinition in modelArray)
@@ -184,7 +170,7 @@ namespace pppl_uml_python
                             string stateName = state["state_name"]?.ToString();
                             if (!string.IsNullOrEmpty(stateName) && allStates.Add(stateName))
                             {
-                                pythonCodeBuilder.AppendLine($"    {stateName} = State(\"{stateName}\", \"{state["state_value"]}\")");
+                                pythonCodeBuilder.AppendLine($"    {stateName} = \"{stateName}\"");
                             }
                         }
                     }
@@ -242,39 +228,7 @@ namespace pppl_uml_python
                 }
             }
         }
-        private void GenerateRelation(JObject jsonObject, StringBuilder pythonCodeBuilder)
-        {
-            var allStates = new HashSet<string>(); // Using HashSet to avoid duplicates
-            var modelArray = jsonObject["model"] as JArray;
-            pythonCodeBuilder.AppendLine($"class Association:");
-            pythonCodeBuilder.AppendLine($"    def __init__(self, class1: str, class2: str, multiplicity):");
-            pythonCodeBuilder.AppendLine($"        self.class1 = class1");
-            pythonCodeBuilder.AppendLine($"        self.class2 = class2");
-            pythonCodeBuilder.AppendLine($"        self.multiplicity = multiplicity");
-            pythonCodeBuilder.AppendLine();
-            pythonCodeBuilder.AppendLine($"class MainAssociation:");
-            if (modelArray != null)
-            {
-                foreach (var classDefinition in modelArray)
-                {
-                    string associationName = classDefinition["name"]?.ToString();
-                    if (associationName != null && classDefinition["type"]?.ToString() == "association")
-                    {
-                        var classArray = classDefinition["class"] as JArray;
-                        if (classArray != null && classArray.Count == 2)
-                        {
-                            string class1 = classArray[0]["class_name"]?.ToString();
-                            string class2 = classArray[1]["class_name"]?.ToString();
-                            string multiplicity = classArray[0]["class_multiplicity"]?.ToString();
-                            if (!string.IsNullOrEmpty(class1) && !string.IsNullOrEmpty(class2) && !string.IsNullOrEmpty(multiplicity))
-                            {
-                                pythonCodeBuilder.AppendLine($"    {associationName} = Association(\"{class1}\", \"{class2}\", \"{multiplicity}\")");
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        
         private string GetDefaultPythonValue(string pythonDataType)
         {
             switch (pythonDataType)
@@ -328,9 +282,7 @@ namespace pppl_uml_python
         }
         private void ClearPythonOutput()
         {
-            // Hapus output Python
             textGeneratePython.Text = string.Empty;
-            // Tampilkan kembali teks placeholder
             textGeneratePython.ForeColor = System.Drawing.Color.Gray;
             textGeneratePython.Text = PlaceholderText;
         }
@@ -385,6 +337,12 @@ namespace pppl_uml_python
                     }
                 }
             }
+        }
+
+        private void textGeneratePython_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            Clipboard.SetText(textGeneratePython.Text);
+            MessageBox.Show("Text successfully copied to Clipboard!");
         }
     }
 }
