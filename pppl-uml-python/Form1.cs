@@ -10,6 +10,8 @@ using System.Windows.Forms;
 using System.Xml.Linq;
 using System.Linq;
 using System.Drawing;
+using System.Security.Cryptography.X509Certificates;
+
 namespace pppl_uml_python
 {
     public partial class Form1 : Form
@@ -78,16 +80,30 @@ namespace pppl_uml_python
                 foreach (var classDefinition in modelArray)
                 {
                     string className = classDefinition["class_name"]?.ToString();
-                    var statesArray = classDefinition["states"] as JArray;
                     string classAttributes = "";
                     string classAttrSelf = "";
                     string classEvents = "";
+                    string statesValue = "";
+                    var statesArray = classDefinition["states"] as JArray;
                     var attributesArray = classDefinition["attributes"] as JArray;
+
+                    if (statesArray!= null)
+                    {
+                        foreach (var states in statesArray)
+                        {
+                            string stateName = states["state_name"]?.ToString();
+                            if (!string.IsNullOrEmpty(stateName))
+                            {
+                                statesValue += $"        {stateName} = \"{stateName}\"{Environment.NewLine}";
+                            }
+                        }
+                    }
                     if (attributesArray != null)
                     {
                         foreach (var attribute in attributesArray)
                         {
                             string attributeName = attribute["attribute_name"]?.ToString();
+                            string attributeName2 = attribute["attribute_name"]?.ToString();
                             string dataType = attribute["data_type"]?.ToString();
                             if (!string.IsNullOrEmpty(attributeName) && !string.IsNullOrEmpty(dataType))
                             {
@@ -95,22 +111,23 @@ namespace pppl_uml_python
                                 string defaultValue = attribute["default_value"]?.ToString() ?? GetDefaultPythonValue(pythonDataType);
                                 if (attributeName == "status")
                                 {
-                                    defaultValue = "state";
+                                    attributeName2 = $"{className}.states.aktif";
+                                    defaultValue = "states";
                                 }
                                 if (attribute["attribute_type"]?.ToString() == "naming_attribute")
                                 {
                                     classAttributes += $"{attributeName}: {defaultValue}, ";
-                                    classAttrSelf += $"        self.{attributeName} = {attributeName} # Primary Key {Environment.NewLine}";
+                                    classAttrSelf += $"        self.{attributeName} = {attributeName2} # Primary Key {Environment.NewLine}";
                                 }
                                 else if (attribute["attribute_type"]?.ToString() == "referential_attribute")
                                 {
                                     classAttributes += $"{attributeName} : {defaultValue}, ";
-                                    classAttrSelf += $"        self.{attributeName} = {attributeName} # Foreign Key {Environment.NewLine}";
+                                    classAttrSelf += $"        self.{attributeName} = {attributeName2} # Foreign Key {Environment.NewLine}";
                                 }
                                 else if (attribute["attribute_type"]?.ToString() == "descriptive_attribute")
                                 {
                                     classAttributes += $"{attributeName} : {defaultValue}, ";
-                                    classAttrSelf += $"        self.{attributeName} = {attributeName}{Environment.NewLine}";
+                                    classAttrSelf += $"        self.{attributeName} = {attributeName2}{Environment.NewLine}";
                                 }
                             }
                         }
@@ -142,41 +159,23 @@ namespace pppl_uml_python
                             classAttributes = classAttributes.Substring(0, classAttributes.Length - 2);
                         }
                         pythonCodeBuilder.AppendLine($"class {className}:");
+                        if(statesValue != "")
+                        {
+                            pythonCodeBuilder.AppendLine($"    class states :");
+                        }
+                        pythonCodeBuilder.AppendLine($"{statesValue}");
+                   
                         pythonCodeBuilder.AppendLine($"    def __init__(self, {classAttributes}):");
                         pythonCodeBuilder.AppendLine($"{classAttrSelf}");
                     }
-                    GenerateStatesClass(jsonObject, pythonCodeBuilder); pythonCodeBuilder.AppendLine();
-                    pythonCodeBuilder.AppendLine($"{classEvents}"); // Add this line
+                    pythonCodeBuilder.AppendLine($"{classEvents}");
                 }
                 pythonCodeBuilder.AppendLine($"# Association");
                 GenerateAssociationClasses(jsonObject, pythonCodeBuilder);
             }
             return pythonCodeBuilder.ToString();
         }
-        private void GenerateStatesClass(JObject jsonObject, StringBuilder pythonCodeBuilder)
-        {
-            var allStates = new HashSet<string>(); // Using HashSet to avoid duplicates
-            var modelArray = jsonObject["model"] as JArray;
-            pythonCodeBuilder.AppendLine($"class state :");
-            if (modelArray != null)
-            {
-                foreach (var classDefinition in modelArray)
-                {
-                    var statesArray = classDefinition["states"] as JArray;
-                    if (statesArray != null)
-                    {
-                        foreach (var state in statesArray)
-                        {
-                            string stateName = state["state_name"]?.ToString();
-                            if (!string.IsNullOrEmpty(stateName) && allStates.Add(stateName))
-                            {
-                                pythonCodeBuilder.AppendLine($"    {stateName} = \"{stateName}\"");
-                            }
-                        }
-                    }
-                }
-            }
-        }
+      
         private void GenerateAssociationClasses(JObject jsonObject, StringBuilder pythonCodeBuilder)
         {
             var associationsArray = jsonObject["model"].Where(j => j["type"].ToString() == "association").ToList();
