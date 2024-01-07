@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 using System.Threading.Tasks;
 using System.IO;
 using System.Windows.Forms;
@@ -33,8 +34,10 @@ namespace pppl_uml_python
                     bt_copyJSON.Enabled = true;
                     try
                     {
-                        string fileContent = File.ReadAllText(selectedFilePath);
-                        textBox1.Text = fileContent;
+                        JToken parsedJson = JToken.Parse(File.ReadAllText(selectedFilePath));
+                        string formattedJson = parsedJson.ToString(Formatting.Indented);
+
+                        textBox1.Text = formattedJson;
                     }
                     catch (Exception ex)
                     {
