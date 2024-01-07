@@ -17,6 +17,7 @@ namespace pppl_uml_python
         {
             InitializeComponent();
             this.WindowState = FormWindowState.Maximized;
+            this.BackColor = Color.FromArgb(0xFF, 0xFF, 0xE8); // Hex code: #FFFFE8
         }
 
         private string selectedFilePath;
