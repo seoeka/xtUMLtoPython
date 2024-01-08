@@ -73,7 +73,6 @@ namespace pppl_uml_python
         {
             StringBuilder pythonCodeBuilder = new StringBuilder();
             var modelArray = jsonObject["model"] as JArray;
-            pythonCodeBuilder.AppendLine($"# Classes"); pythonCodeBuilder.AppendLine();
             var allStates = new HashSet<string>();
             if (modelArray != null)
             {
@@ -98,6 +97,7 @@ namespace pppl_uml_python
                             }
                         }
                     }
+
                     if (attributesArray != null)
                     {
                         foreach (var attribute in attributesArray)
@@ -132,6 +132,7 @@ namespace pppl_uml_python
                             }
                         }
                     }
+
                     if (statesArray != null)
                     {
                         foreach (var state in statesArray)
@@ -152,6 +153,7 @@ namespace pppl_uml_python
                             }
                         }
                     }
+
                     if (!string.IsNullOrEmpty(className))
                     {
                         if (classAttributes.EndsWith(", "))
@@ -159,16 +161,19 @@ namespace pppl_uml_python
                             classAttributes = classAttributes.Substring(0, classAttributes.Length - 2);
                         }
                         pythonCodeBuilder.AppendLine($"class {className}:");
-                        if(statesValue != "")
-                        {
-                            pythonCodeBuilder.AppendLine($"    class states :");
+                            if(statesValue != "")
+                            {
+                                pythonCodeBuilder.AppendLine($"    class states :");
+                                pythonCodeBuilder.AppendLine($"{statesValue}");
                         }
-                        pythonCodeBuilder.AppendLine($"{statesValue}");
-                   
                         pythonCodeBuilder.AppendLine($"    def __init__(self, {classAttributes}):");
                         pythonCodeBuilder.AppendLine($"{classAttrSelf}");
                     }
-                    pythonCodeBuilder.AppendLine($"{classEvents}");
+
+                    if(classEvents != "")
+                    {
+                        pythonCodeBuilder.AppendLine($"{classEvents}");
+                    }
                 }
                 pythonCodeBuilder.AppendLine($"# Association");
                 GenerateAssociationClasses(jsonObject, pythonCodeBuilder);
