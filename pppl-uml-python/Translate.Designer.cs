@@ -2,7 +2,7 @@ using System.Drawing;
 
 namespace pppl_uml_python
 {
-    partial class Form1
+    partial class Translate
     {
         /// <summary>
         /// Required designer variable.

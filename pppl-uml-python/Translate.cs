@@ -14,9 +14,9 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace pppl_uml_python
 {
-    public partial class Form1 : Form
+    public partial class Translate : Form
     {
-        public Form1()
+        public Translate()
         {
             InitializeComponent();
             this.WindowState = FormWindowState.Maximized;
@@ -147,7 +147,7 @@ namespace pppl_uml_python
                                     if (!string.IsNullOrEmpty(eventName))
                                     {
                                         classEvents += $"    def {eventName}():{Environment.NewLine}";
-                                        classEvents += $"        states.{stateName}{Environment.NewLine}";
+                                        classEvents += $"        # Implementation code here\r\n        pass\n{Environment.NewLine}";
                                     }
                                 }
                             }
