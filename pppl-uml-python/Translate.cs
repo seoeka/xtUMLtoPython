@@ -20,7 +20,7 @@ namespace pppl_uml_python
         {
             InitializeComponent();
             this.WindowState = FormWindowState.Maximized;
-            this.BackColor = Color.FromArgb(0xFF, 0xFF, 0xE8);
+            this.BackColor = Color.FromArgb(0xCC, 0xCC, 0xCC);
         }
 
         private string selectedFilePath;
@@ -167,6 +167,10 @@ namespace pppl_uml_python
                                     classAttributes += $"{attributeName} : {defaultValue}, ";
                                     classAttrSelf += $"        self.{attributeName} = {attributeName2}{Environment.NewLine}";
                                 }
+                                else if (attribute["attribute_type"]?.ToString()?.Trim() == "related_component")
+                                {
+                                    classAttrSelf += $"        self.{attributeName} = {attributeName2}{Environment.NewLine}";
+                                }
                             }
                         }
                     }
@@ -303,6 +307,8 @@ namespace pppl_uml_python
                     return "int";
                 case "float":
                     return "float";
+                case "inst_ref":
+                    return "ref";
                 default:
                     return "";
             }
@@ -336,9 +342,6 @@ namespace pppl_uml_python
         private const string PlaceholderText = "translated python appears here..";
         private void btnClear_Click(object sender, EventArgs e)
         {
-            bt_copyJSON.Enabled = false;
-            bt_copyPy.Enabled = false;
-            btExportPython.Enabled = false;
             textBox1.Clear();
             ClearPythonOutput();
         }
