@@ -89,14 +89,27 @@ namespace pppl_uml_python
 
                     if (statesArray!= null)
                     {
+                        int stateIndex = 0;
                         foreach (var states in statesArray)
                         {
                             string stateName = states["state_name"]?.ToString();
                             stateName = stateName?.Replace(" ", "").Trim();
                             string stateValue = states["state_value"]?.ToString()?.Trim();
+
                             if (!string.IsNullOrEmpty(stateName))
                             {
                                 statesValue += $"        {stateName} = \"{stateValue}\"{Environment.NewLine}";
+                                if (stateIndex == 0)
+                                {
+                                    transitionValue += $"        if self.status{className} == {className}.states.{stateName}:{Environment.NewLine}";
+                                }
+                                else
+                                {
+                                    transitionValue += $"        elif self.status{className} == {className}.states.{stateName}:{Environment.NewLine}";
+                                }
+                                transitionValue += $"            # Implementation code here\r\n            pass\n{Environment.NewLine}";
+
+                                stateIndex++;
                             }
                         }
                     }
@@ -184,12 +197,16 @@ namespace pppl_uml_python
                             {
                                 pythonCodeBuilder.AppendLine($"    class states :");
                                 pythonCodeBuilder.AppendLine($"{statesValue}");
-                        }
+                            }
                         pythonCodeBuilder.AppendLine($"    def __init__(self, {classAttributes}):");
                         pythonCodeBuilder.AppendLine($"{classAttrSelf}");
                     }
-
-                    if(classEvents != "")
+                    if (statesValue != "")
+                    {
+                        pythonCodeBuilder.AppendLine($"    def transition_status_{className}(self) :");
+                        pythonCodeBuilder.AppendLine($"{transitionValue}");
+                    }
+                    if (classEvents != "")
                     {
                         pythonCodeBuilder.AppendLine($"{classEvents}");
                     }
