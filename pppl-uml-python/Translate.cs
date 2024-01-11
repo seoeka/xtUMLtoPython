@@ -74,11 +74,13 @@ namespace pppl_uml_python
             StringBuilder pythonCodeBuilder = new StringBuilder();
             var modelArray = jsonObject["model"] as JArray;
             var allStates = new HashSet<string>();
+            string newClassName = "";
+
             if (modelArray != null)
             {
                 foreach (var classDefinition in modelArray)
                 {
-                    string className = classDefinition["class_name"]?.ToString()?.Trim();
+                    string className = classDefinition["class_name"]?.ToString()?.Trim(); 
                     string classAttributes = "";
                     string classAttrSelf = "";
                     string classEvents = "";
@@ -169,6 +171,13 @@ namespace pppl_uml_python
                                 }
                                 else if (attribute["attribute_type"]?.ToString()?.Trim() == "related_component")
                                 {
+                                    string relatedClass = attribute["related_class_name"]?.ToString()?.Trim();
+                                    var targetClass = modelArray.FirstOrDefault(s => s["class_name"]?.ToString() == relatedClass);
+                                    if (targetClass == null)
+                                    {
+                                        newClassName += $"class {relatedClass} :\n    pass\n{Environment.NewLine}";
+                                    }
+                                    attributeName2 = $"{relatedClass}()";
                                     classAttrSelf += $"        self.{attributeName} = {attributeName2}{Environment.NewLine}";
                                 }
                             }
@@ -226,6 +235,7 @@ namespace pppl_uml_python
                             }
                         pythonCodeBuilder.AppendLine($"    def __init__(self, {classAttributes}):");
                         pythonCodeBuilder.AppendLine($"{classAttrSelf}");
+
                     }
                     if (statesValue != "")
                     {
@@ -239,6 +249,7 @@ namespace pppl_uml_python
                 }
                 pythonCodeBuilder.AppendLine($"# Association");
                 GenerateAssociationClasses(jsonObject, pythonCodeBuilder);
+                pythonCodeBuilder.AppendLine($"{newClassName}");
             }
             return pythonCodeBuilder.ToString();
         }
