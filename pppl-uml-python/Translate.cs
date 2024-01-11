@@ -107,8 +107,30 @@ namespace pppl_uml_python
                                 {
                                     transitionValue += $"        elif self.status{className} == {className}.states.{stateName}:{Environment.NewLine}";
                                 }
-                                transitionValue += $"            # Implementation code here\r\n            pass\n{Environment.NewLine}";
+                                if (states["transitions"] == null || !states["transitions"].Any())
+                                {
+                                    transitionValue += $"            # Implementation code here\r\n            pass\n{Environment.NewLine}";
+                                }
+                                else
+                                {
+                                    var transitionsArray = states["transitions"] as JArray;
+                                    if (transitionsArray != null && transitionsArray.Any())
+                                    {
+                                        foreach (var transition in transitionsArray)
+                                        {
+                                            string targetStateId = transition["target_state_id"]?.ToString();
 
+                                            var targetState = statesArray.FirstOrDefault(s => s["state_id"]?.ToString() == targetStateId);
+                                            if (targetState != null)
+                                            {
+                                                string targetStateEvent = targetState["state_event"]?.ToString();
+                                                string targetStateFunction = targetState["state_function"]?.ToString();
+                                                transitionValue += $"            if self.status{className} == {className}.states.{stateName}:{Environment.NewLine}";
+                                                transitionValue += $"                self.{targetStateEvent ?? targetStateFunction}()\n{Environment.NewLine}";
+                                            }
+                                        }
+                                    }
+                                }   
                                 stateIndex++;
                             }
                         }
@@ -159,7 +181,7 @@ namespace pppl_uml_python
                             {
                                 if (!string.IsNullOrEmpty(eventName))
                                 {
-                                    classEvents += $"    def {eventName}():{Environment.NewLine}";
+                                    classEvents += $"    def {eventName}(self):{Environment.NewLine}";
                                     classEvents += $"        # Implementation code here\r\n        pass\n{Environment.NewLine}";
                                 }
                             }
