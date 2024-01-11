@@ -20,7 +20,7 @@ namespace pppl_uml_python
         {
             InitializeComponent();
             this.WindowState = FormWindowState.Maximized;
-            this.BackColor = Color.FromArgb(0xFF, 0xFF, 0xE8); // Hex code: #FFFFE8
+            this.BackColor = Color.FromArgb(0xFF, 0xFF, 0xE8);
         }
 
         private string selectedFilePath;
@@ -78,7 +78,7 @@ namespace pppl_uml_python
             {
                 foreach (var classDefinition in modelArray)
                 {
-                    string className = classDefinition["class_name"]?.ToString();
+                    string className = classDefinition["class_name"]?.ToString()?.Trim();
                     string classAttributes = "";
                     string classAttrSelf = "";
                     string classEvents = "";
@@ -91,9 +91,11 @@ namespace pppl_uml_python
                         foreach (var states in statesArray)
                         {
                             string stateName = states["state_name"]?.ToString();
+                            stateName = stateName?.Replace(" ", "").Trim();
+                            string stateValue = states["state_value"]?.ToString()?.Trim();
                             if (!string.IsNullOrEmpty(stateName))
                             {
-                                statesValue += $"        {stateName} = \"{stateName}\"{Environment.NewLine}";
+                                statesValue += $"        {stateName} = \"{stateValue}\"{Environment.NewLine}";
                             }
                         }
                     }
@@ -102,29 +104,29 @@ namespace pppl_uml_python
                     {
                         foreach (var attribute in attributesArray)
                         {
-                            string attributeName = attribute["attribute_name"]?.ToString();
-                            string attributeName2 = attribute["attribute_name"]?.ToString();
+                            string attributeName = attribute["attribute_name"]?.ToString()?.Trim();
+                            string attributeName2 = attribute["attribute_name"]?.ToString()?.Trim();
                             string dataType = attribute["data_type"]?.ToString();
                             if (!string.IsNullOrEmpty(attributeName) && !string.IsNullOrEmpty(dataType))
                             {
                                 string pythonDataType = ConvertCSharpToPythonDataType(dataType);
-                                string defaultValue = attribute["default_value"]?.ToString() ?? GetDefaultPythonValue(pythonDataType);
-                                if (attributeName == "status")
+                                string defaultValue = attribute["default_value"]?.ToString()?.Trim() ?? GetDefaultPythonValue(pythonDataType);
+                                if (attributeName != null && attributeName.StartsWith("status"))
                                 {
                                     attributeName2 = $"{className}.states.aktif";
                                     defaultValue = "states";
                                 }
-                                if (attribute["attribute_type"]?.ToString() == "naming_attribute")
+                                if (attribute["attribute_type"]?.ToString()?.Trim() == "naming_attribute")
                                 {
                                     classAttributes += $"{attributeName}: {defaultValue}, ";
                                     classAttrSelf += $"        self.{attributeName} = {attributeName2} # Primary Key {Environment.NewLine}";
                                 }
-                                else if (attribute["attribute_type"]?.ToString() == "referential_attribute")
+                                else if (attribute["attribute_type"]?.ToString()?.Trim() == "referential_attribute")
                                 {
                                     classAttributes += $"{attributeName} : {defaultValue}, ";
                                     classAttrSelf += $"        self.{attributeName} = {attributeName2} # Foreign Key {Environment.NewLine}";
                                 }
-                                else if (attribute["attribute_type"]?.ToString() == "descriptive_attribute")
+                                else if (attribute["attribute_type"]?.ToString()?.Trim() == "descriptive_attribute")
                                 {
                                     classAttributes += $"{attributeName} : {defaultValue}, ";
                                     classAttrSelf += $"        self.{attributeName} = {attributeName2}{Environment.NewLine}";
@@ -137,13 +139,13 @@ namespace pppl_uml_python
                     {
                         foreach (var state in statesArray)
                         {
-                            string stateName = state["state_name"]?.ToString();
+                            string stateName = state["state_name"]?.ToString()?.Trim();
                             var stateEvents = state["state_event"] as JArray;
                             if (!string.IsNullOrEmpty(stateName) && allStates.Add(stateName) && stateEvents != null)
                             {
                                 foreach (var stateEvent in stateEvents)
                                 {
-                                    string eventName = stateEvent?.ToString();
+                                    string eventName = stateEvent?.ToString()?.Trim();
                                     if (!string.IsNullOrEmpty(eventName))
                                     {
                                         classEvents += $"    def {eventName}():{Environment.NewLine}";
