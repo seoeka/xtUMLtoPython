@@ -167,6 +167,10 @@ namespace pppl_uml_python
                                     classAttributes += $"{attributeName} : {defaultValue}, ";
                                     classAttrSelf += $"        self.{attributeName} = {attributeName2}{Environment.NewLine}";
                                 }
+                                else if (attribute["attribute_type"]?.ToString()?.Trim() == "related_component")
+                                {
+                                    classAttrSelf += $"        self.{attributeName} = {attributeName2}{Environment.NewLine}";
+                                }
                             }
                         }
                     }
@@ -303,6 +307,8 @@ namespace pppl_uml_python
                     return "int";
                 case "float":
                     return "float";
+                case "inst_ref":
+                    return "ref";
                 default:
                     return "";
             }
