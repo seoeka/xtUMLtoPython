@@ -139,18 +139,26 @@ namespace pppl_uml_python
                     {
                         foreach (var state in statesArray)
                         {
-                            string stateName = state["state_name"]?.ToString()?.Trim();
-                            var stateEvents = state["state_event"] as JArray;
-                            if (!string.IsNullOrEmpty(stateName) && allStates.Add(stateName) && stateEvents != null)
+                            string stateNames = state["state_name"]?.ToString()?.Trim();
+                            var stateEvent = state["state_event"];
+                            if (stateEvent is JArray stateEventArray)
                             {
-                                foreach (var stateEvent in stateEvents)
+                                foreach (var eventName in stateEventArray)
                                 {
-                                    string eventName = stateEvent?.ToString()?.Trim();
-                                    if (!string.IsNullOrEmpty(eventName))
+                                    if (!string.IsNullOrEmpty(eventName?.ToString()?.Trim()))
                                     {
                                         classEvents += $"    def {eventName}():{Environment.NewLine}";
                                         classEvents += $"        # Implementation code here\r\n        pass\n{Environment.NewLine}";
                                     }
+                                }
+                            }
+                            else if (stateEvent != null)
+                            {
+                                string eventName = stateEvent.ToString()?.Trim();
+                                if (!string.IsNullOrEmpty(eventName))
+                                {
+                                    classEvents += $"    def {eventName}():{Environment.NewLine}";
+                                    classEvents += $"        # Implementation code here\r\n        pass\n{Environment.NewLine}";
                                 }
                             }
                         }
