@@ -83,6 +83,7 @@ namespace pppl_uml_python
                     string classAttrSelf = "";
                     string classEvents = "";
                     string statesValue = "";
+                    string transitionValue = "";
                     var statesArray = classDefinition["states"] as JArray;
                     var attributesArray = classDefinition["attributes"] as JArray;
 
@@ -140,26 +141,34 @@ namespace pppl_uml_python
                         foreach (var state in statesArray)
                         {
                             string stateNames = state["state_name"]?.ToString()?.Trim();
-                            var stateEvent = state["state_event"];
-                            if (stateEvent is JArray stateEventArray)
+
+                            void AddEvent(string eventName)
                             {
-                                foreach (var eventName in stateEventArray)
-                                {
-                                    if (!string.IsNullOrEmpty(eventName?.ToString()?.Trim()))
-                                    {
-                                        classEvents += $"    def {eventName}():{Environment.NewLine}";
-                                        classEvents += $"        # Implementation code here\r\n        pass\n{Environment.NewLine}";
-                                    }
-                                }
-                            }
-                            else if (stateEvent != null)
-                            {
-                                string eventName = stateEvent.ToString()?.Trim();
                                 if (!string.IsNullOrEmpty(eventName))
                                 {
                                     classEvents += $"    def {eventName}():{Environment.NewLine}";
                                     classEvents += $"        # Implementation code here\r\n        pass\n{Environment.NewLine}";
                                 }
+                            }
+
+                            var stateEvent = state["state_event"];
+                            if (stateEvent is JArray stateEventArray && stateEventArray.Count > 0)
+                            {
+                                AddEvent(stateEventArray[0]?.ToString()?.Trim());
+                            }
+                            else
+                            {
+                                AddEvent(stateEvent?.ToString()?.Trim());
+                            }
+
+                            var stateFunction = state["state_function"];
+                            if (stateFunction is JArray stateFunctionArray && stateFunctionArray.Count > 0)
+                            {
+                                AddEvent(stateFunctionArray[0]?.ToString()?.Trim());
+                            }
+                            else
+                            {
+                                AddEvent(stateFunction?.ToString()?.Trim());
                             }
                         }
                     }
