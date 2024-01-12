@@ -24,6 +24,7 @@ namespace pppl_uml_python
         }
 
         private string selectedFilePath;
+        private bool isJsonFileSelected = false;
 
         private void btnSelect_Click(object sender, EventArgs e)
         {
@@ -34,6 +35,7 @@ namespace pppl_uml_python
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     selectedFilePath = openFileDialog.FileName;
+                    isJsonFileSelected = true;
                     try
                     {
                         JToken parsedJson = JToken.Parse(File.ReadAllText(selectedFilePath));
@@ -60,20 +62,25 @@ namespace pppl_uml_python
         {
             try
             {
-                CheckError(selectedFilePath);
-                if (string.IsNullOrWhiteSpace(msgBox.Text))
+                if (isJsonFileSelected == true)
                 {
-                    JObject jsonObject = JObject.Parse(msgBox.Text);
-                    string pythonCode = GeneratePythonCode(jsonObject);
-                    textGeneratePython.Text = pythonCode;
-                    btnSave.Enabled = true;
-                    textGeneratePython.ForeColor = System.Drawing.Color.Black;
+                    CheckError(selectedFilePath);
+                    if (string.IsNullOrWhiteSpace(msgBox.Text))
+                    {
+                        JObject jsonObject = JObject.Parse(msgBox.Text);
+                        string pythonCode = GeneratePythonCode(jsonObject);
+                        textGeneratePython.Text = pythonCode;
+                        btnSave.Enabled = true;
+                        textGeneratePython.ForeColor = System.Drawing.Color.Black;
+                    }
+                    else
+                    {
+                        msgBox.Clear();
+                        MessageBox.Show("Seems like JSON format is incorrect or incompatible, click Parse first!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
                 else
-                {
-                    msgBox.Clear();
-                    MessageBox.Show("Seems like JSON format is incorrect or incompatible, click Parse first!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                    MessageBox.Show("Please select JSON file first!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch (Exception ex)
             {
@@ -345,6 +352,7 @@ namespace pppl_uml_python
         private const string PlaceholderText = "translated python appears here..";
         private void btnClear_Click(object sender, EventArgs e)
         {
+            isJsonFileSelected = false;
             msgBox.Clear();
             ClearPythonOutput();
         }
@@ -485,9 +493,9 @@ namespace pppl_uml_python
 
         private void btnParse_Click(object sender, EventArgs e)
         {
-            if (selectedFilePath == null || selectedFilePath.Length == 0)
+            if (selectedFilePath == null || selectedFilePath.Length == 0 || isJsonFileSelected == false)
             {
-                MessageBox.Show("Please select JSON file first.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Please select JSON file first!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             else                
