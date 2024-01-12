@@ -9,10 +9,10 @@ using System.Windows.Forms;
 namespace pppl_uml_python
 {
     internal class ParsingPoint
-    {/*
+    {
         public static bool Point25(Translate form1, JArray jsonArray)
         {
-            RichTextBox msgBox = form1.GetMessageBox();
+            TextBox msgBox = form1.GetMessageBox();
             try
             {
                 Func<JToken, bool> processItem = null;
@@ -144,7 +144,7 @@ namespace pppl_uml_python
 
         public static bool Point27(Translate form1, JArray jsonArray)
         {
-            RichTextBox msgBox = form1.GetMessageBox();
+            TextBox msgBox = form1.GetMessageBox();
 
             try
             {
@@ -206,7 +206,7 @@ namespace pppl_uml_python
 
         public static bool Point28(Translate form1, JArray jsonArray)
         {
-            RichTextBox msgBox = form1.GetMessageBox();
+            TextBox msgBox = form1.GetMessageBox();
             try
             {
                 Func<JToken, bool> processItem = null;
@@ -247,7 +247,7 @@ namespace pppl_uml_python
 
         public static bool Point29(Translate form1, JArray jsonArray)
         {
-            RichTextBox msgBox = form1.GetMessageBox();
+            TextBox msgBox = form1.GetMessageBox();
             try
             {
                 Func<JToken, bool> processItem = null;
@@ -347,7 +347,7 @@ namespace pppl_uml_python
 
         public static bool Point30(Translate form1, JArray jsonArray)
         {
-            RichTextBox msgBox = form1.GetMessageBox();
+            TextBox msgBox = form1.GetMessageBox();
 
             try
             {
@@ -416,7 +416,7 @@ namespace pppl_uml_python
 
         public static bool Point34(Translate form1, JArray jsonArray)
         {
-            RichTextBox msgBox = form1.GetMessageBox();
+            TextBox msgBox = form1.GetMessageBox();
             try
             {
                 Func<JToken, bool> processItem = null;
@@ -476,7 +476,7 @@ namespace pppl_uml_python
 
         public static bool Point35(Translate form1, JArray jsonArray)
         {
-            RichTextBox msgBox = form1.GetMessageBox();
+            TextBox msgBox = form1.GetMessageBox();
             try
             {
                 HashSet<string> change = new HashSet<string>();
@@ -530,6 +530,6 @@ namespace pppl_uml_python
                 msgBox.AppendText($"Syntax error 35: " + ex.Message + ".\r\n");
                 return false;
             }
-        }*/
+        }
     }
 }

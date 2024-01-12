@@ -11,7 +11,6 @@ using System.Xml.Linq;
 using System.Linq;
 using System.Drawing;
 using System.Security.Cryptography.X509Certificates;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace pppl_uml_python
 {
@@ -25,6 +24,7 @@ namespace pppl_uml_python
         }
 
         private string selectedFilePath;
+
         private void btnUpload_Click(object sender, EventArgs e)
         {
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
@@ -38,7 +38,16 @@ namespace pppl_uml_python
                     {
                         JToken parsedJson = JToken.Parse(File.ReadAllText(selectedFilePath));
                         string formattedJson = parsedJson.ToString(Formatting.Indented);
-                        msgBox.Text = formattedJson;
+
+                        CheckError(selectedFilePath);
+                        if (string.IsNullOrWhiteSpace(msgBox.Text))
+                        {
+                            msgBox.Text = formattedJson;
+                        }
+                        else
+                        {
+                            msgBox.Clear();
+                        }
                     }
                     catch (Exception ex)
                     {
@@ -51,16 +60,20 @@ namespace pppl_uml_python
         {
             try
             {
+                CheckError(selectedFilePath);
                 if (string.IsNullOrWhiteSpace(msgBox.Text))
                 {
-                    MessageBox.Show("Please enter a JSON file first!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
+                    JObject jsonObject = JObject.Parse(msgBox.Text);
+                    string pythonCode = GeneratePythonCode(jsonObject);
+                    textGeneratePython.Text = pythonCode;
+                    btExportPython.Enabled = true;
+                    textGeneratePython.ForeColor = System.Drawing.Color.Black;
                 }
-                JObject jsonObject = JObject.Parse(msgBox.Text);
-                string pythonCode = GeneratePythonCode(jsonObject);
-                textGeneratePython.Text = pythonCode;
-                btExportPython.Enabled = true;
-                textGeneratePython.ForeColor = System.Drawing.Color.Black;
+                else
+                {
+                    msgBox.Clear();
+                    MessageBox.Show("Seems like JSON format is incorrect or incompatible, click Parse first!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
             catch (Exception ex)
             {
@@ -410,6 +423,301 @@ namespace pppl_uml_python
         {
             MessageBox.Show("We are sorry, this feature is not available right now.", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
             return;
+        }
+
+        // Parsing
+
+        private JArray ProcessJson(string filePath)
+        {
+            JArray jsonArray;
+            try
+            {
+                string jsonContent = File.ReadAllText(filePath);
+                CheckJsonCompliance(jsonContent);
+                jsonArray = new JArray(JToken.Parse(jsonContent));
+                msgBox.Text = jsonArray.ToString();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error reading the file {Path.GetFileName(filePath)}: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                jsonArray = new JArray();
+            }
+
+            return jsonArray;
+        }
+
+        private void CheckError(string filePath)
+        {
+            if (filePath == null || filePath.Length == 0)
+            {
+                MessageBox.Show("Please select a folder containing JSON files first.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                return;
+            }
+
+            JArray jsonArray = this.ProcessJson(filePath);
+
+            msgBox.Clear();
+
+            CheckParsing15.Point1(this, jsonArray);
+            CheckParsing15.Point2(this, jsonArray);
+            CheckParsing15.Point3(this, jsonArray);
+            CheckParsing15.Point4(this, jsonArray);
+            CheckParsing15.Point5(this, jsonArray);
+            CheckParsing610.Point6(this, jsonArray);
+            CheckParsing610.Point7(this, jsonArray);
+            CheckParsing610.Point8(this, jsonArray);
+            CheckParsing610.Point9(this, jsonArray);
+            CheckParsing610.Point10(this, jsonArray);
+            CheckParsing1115.Point11(this, jsonArray);
+            CheckParsing1115.Point13(this, jsonArray);
+            CheckParsing1115.Point14(this, jsonArray);
+            CheckParsing1115.Point15(this, jsonArray);
+
+            string jsonContent = File.ReadAllText(filePath);
+            CheckJsonCompliance(jsonContent);
+
+            ParsingPoint.Point25(this, jsonArray);
+            ParsingPoint.Point27(this, jsonArray);
+            ParsingPoint.Point28(this, jsonArray);
+            ParsingPoint.Point29(this, jsonArray);
+            ParsingPoint.Point30(this, jsonArray);
+            ParsingPoint.Point34(this, jsonArray);
+            ParsingPoint.Point35(this, jsonArray);
+
+            CheckParsing1115.Point99(this, jsonArray);
+        }
+
+        private void btnParse_Click(object sender, EventArgs e)
+        {
+            CheckError(selectedFilePath);
+            if (string.IsNullOrWhiteSpace(msgBox.Text))
+            {
+                msgBox.Text = "Model has successfully passed parsing";
+            }
+        }
+        public TextBox GetMessageBox()
+        {
+            return msgBox;
+        }
+
+        private void HandleError(string errorMessage)
+        {
+            msgBox.Text += $"{errorMessage}{Environment.NewLine}";
+            Console.WriteLine(errorMessage);
+        }
+
+        private void CheckJsonCompliance(string jsonContent)
+        {
+            try
+            {
+                JObject jsonObj = JObject.Parse(jsonContent);
+
+                Dictionary<string, string> stateModels = new Dictionary<string, string>();
+                HashSet<string> usedKeyLetters = new HashSet<string>();
+                HashSet<int> stateNumbers = new HashSet<int>();
+
+                JToken subsystemsToken = jsonObj["subsystems"];
+                if (subsystemsToken != null && subsystemsToken.Type == JTokenType.Array)
+                {
+                    foreach (var subsystem in subsystemsToken)
+                    {
+                        JToken modelToken = subsystem["model"];
+                        if (modelToken != null && modelToken.Type == JTokenType.Array)
+                        {
+                            foreach (var model in modelToken)
+                            {
+                                ValidateClassModel(model, stateModels, usedKeyLetters, stateNumbers);
+                            }
+                        }
+                    }
+
+                    foreach (var subsystem in subsystemsToken)
+                    {
+                        ValidateEventDirectedToStateModelHelper(subsystem["model"], stateModels, null);
+                    }
+                }
+                ValidateTimerModel(jsonObj, usedKeyLetters);
+            }
+            catch (Exception ex)
+            {
+                HandleError($"Error: {ex.Message}");
+                MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void ValidateClassModel(JToken model, Dictionary<string, string> stateModels, HashSet<string> usedKeyLetters, HashSet<int> stateNumbers)
+        {
+            string objectType = model["type"]?.ToString();
+            string objectName = model["class_name"]?.ToString();
+            Console.WriteLine($"Running CheckKeyLetterUniqueness for {objectName}");
+
+            if (objectType == "class")
+            {
+                Console.WriteLine($"Checking class: {objectName}");
+
+                string assignerStateModelName = $"{objectName}_ASSIGNER";
+                JToken assignerStateModelToken = model[assignerStateModelName];
+
+                if (assignerStateModelToken == null || assignerStateModelToken.Type != JTokenType.Object)
+                {
+                    HandleError($"Syntax error 16: Assigner state model not found for {objectName}.");
+                    return;
+                }
+
+                string keyLetter = model["KL"]?.ToString();
+
+                // Pemanggilan CheckKeyLetterUniqueness
+                CheckKeyLetterUniqueness(usedKeyLetters, keyLetter, objectName);
+
+                // Check if KeyLetter is correct
+                JToken keyLetterToken = assignerStateModelToken?["KeyLetter"];
+                if (keyLetterToken != null && keyLetterToken.ToString() != keyLetter)
+                {
+                    HandleError($"Syntax error 17: KeyLetter for {objectName} does not match the rules.");
+                }
+
+                // Check uniqueness of states
+                CheckStateUniqueness(stateModels, assignerStateModelToken?["states"], objectName, assignerStateModelName);
+
+                // Check uniqueness of state numbers
+                CheckStateNumberUniqueness(stateNumbers, assignerStateModelToken?["states"], objectName);
+
+                // Store state model information
+                string stateModelKey = $"{objectName}.{assignerStateModelName}";
+                stateModels[stateModelKey] = objectName;
+            }
+        }
+
+        private void CheckStateUniqueness(Dictionary<string, string> stateModels, JToken statesToken, string objectName, string assignerStateModelName)
+        {
+            if (statesToken is JArray states)
+            {
+                HashSet<string> uniqueStates = new HashSet<string>();
+
+                foreach (var state in states)
+                {
+                    string stateName = state["state_name"]?.ToString();
+                    string stateModelName = $"{objectName}.{stateName}";
+
+                    // Check uniqueness of state model
+                    if (!uniqueStates.Add(stateModelName))
+                    {
+                        HandleError($"Syntax error 18: State {stateModelName} is not unique in {assignerStateModelName}.");
+                    }
+                }
+            }
+        }
+
+        private void CheckStateNumberUniqueness(HashSet<int> stateNumbers, JToken statesToken, string objectName)
+        {
+            if (statesToken is JArray stateArray)
+            {
+                foreach (var state in stateArray)
+                {
+                    int stateNumber = state["state_number"]?.ToObject<int>() ?? 0;
+
+                    if (!stateNumbers.Add(stateNumber))
+                    {
+                        HandleError($"Syntax error 19: State number {stateNumber} is not unique.");
+                    }
+                }
+            }
+        }
+
+        private void CheckKeyLetterUniqueness(HashSet<string> usedKeyLetters, string keyLetter, string objectName)
+        {
+            string expectedKeyLetter = $"{keyLetter}_A";
+            Console.WriteLine("Running ValidateClassModel");
+            Console.WriteLine($"Checking KeyLetter uniqueness: {expectedKeyLetter} for {objectName}");
+
+            if (!usedKeyLetters.Add(expectedKeyLetter))
+            {
+                HandleError($"Syntax error 20: KeyLetter for {objectName} is not unique.");
+            }
+        }
+
+        private void ValidateTimerModel(JObject jsonObj, HashSet<string> usedKeyLetters)
+        {
+            string timerKeyLetter = jsonObj["subsystems"]?[0]?["model"]?[0]?["KL"]?.ToString();
+            string timerStateModelName = $"{timerKeyLetter}_ASSIGNER";
+
+            JToken timerModelToken = jsonObj["subsystems"]?[0]?["model"]?[0];
+            JToken timerStateModelToken = jsonObj["subsystems"]?[0]?["model"]?[0]?[timerStateModelName];
+
+            if (timerStateModelToken == null || timerStateModelToken.Type != JTokenType.Object)
+            {
+                HandleError($"Syntax error 21: Timer state model not found for TIMER.");
+                return;
+            }
+
+            JToken keyLetterToken = timerStateModelToken?["KeyLetter"];
+            if (keyLetterToken == null || keyLetterToken.ToString() != timerKeyLetter)
+            {
+                HandleError($"Syntax error 21: KeyLetter for TIMER does not match the rules.");
+            }
+        }
+
+        private void ValidateEventDirectedToStateModelHelper(JToken modelsToken, Dictionary<string, string> stateModels, string modelName)
+        {
+            if (modelsToken != null && modelsToken.Type == JTokenType.Array)
+            {
+                foreach (var model in modelsToken)
+                {
+                    string modelType = model["type"]?.ToString();
+                    string className = model["class_name"]?.ToString();
+
+                    if (modelType == "class")
+                    {
+                        JToken assignerToken = model[$"{className}_ASSIGNER"];
+
+                        if (assignerToken != null)
+                        {
+                            Console.WriteLine($"assignerToken.Type: {assignerToken.Type}");
+
+                            if (assignerToken.Type == JTokenType.Object)
+                            {
+                                JToken statesToken = assignerToken["states"];
+
+                                if (statesToken != null && statesToken.Type == JTokenType.Array)
+                                {
+                                    JArray statesArray = (JArray)statesToken;
+
+                                    foreach (var stateItem in statesArray)
+                                    {
+                                        string stateName = stateItem["state_name"]?.ToString();
+                                        string stateModelName = $"{modelName}.{stateName}";
+
+                                        JToken eventsToken = stateItem["events"];
+                                        if (eventsToken is JArray events)
+                                        {
+                                            foreach (var evt in events)
+                                            {
+                                                string eventName = evt["event_name"]?.ToString();
+                                                JToken targetsToken = evt["targets"];
+
+                                                if (targetsToken is JArray targets)
+                                                {
+                                                    foreach (var target in targets)
+                                                    {
+                                                        string targetStateModel = target?.ToString();
+
+                                                        // Check if target state model is in the state models dictionary
+                                                        if (!stateModels.ContainsKey(targetStateModel))
+                                                        {
+                                                            HandleError($"Syntax error 24: Event '{eventName}' in state '{stateModelName}' targets non-existent state model '{targetStateModel}'.");
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }

@@ -40,12 +40,12 @@ namespace pppl_uml_python
             this.btnParse = new System.Windows.Forms.Button();
             this.btnVisualize = new System.Windows.Forms.Button();
             this.btnSimulate = new System.Windows.Forms.Button();
-            this.msgBox = new System.Windows.Forms.TextBox();
             this.btExportPython = new System.Windows.Forms.Button();
             this.btHelp = new System.Windows.Forms.Button();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.howToMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.documentationMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.msgBox = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -175,6 +175,7 @@ namespace pppl_uml_python
             this.btnParse.TabIndex = 1;
             this.btnParse.Text = "Parse";
             this.btnParse.UseVisualStyleBackColor = false;
+            this.btnParse.Click += new System.EventHandler(this.btnParse_Click);
             // 
             // btnVisualize
             // 
@@ -201,17 +202,6 @@ namespace pppl_uml_python
             this.btnSimulate.Text = "Simulate";
             this.btnSimulate.UseVisualStyleBackColor = false;
             this.btnSimulate.Click += new System.EventHandler(this.btnSimulate_Click);
-            // 
-            // msgBox
-            // 
-            this.msgBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.msgBox.Location = new System.Drawing.Point(180, 120);
-            this.msgBox.Multiline = true;
-            this.msgBox.Name = "msgBox";
-            this.msgBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.msgBox.Size = new System.Drawing.Size(640, 590);
-            this.msgBox.TabIndex = 2;
-            this.msgBox.WordWrap = false;
             // 
             // btExportPython
             // 
@@ -260,6 +250,17 @@ namespace pppl_uml_python
             this.documentationMenuItem.Text = "Documentation...";
             this.documentationMenuItem.Click += new System.EventHandler(this.documentationMenuItem_Click);
             // 
+            // msgBox
+            // 
+            this.msgBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.msgBox.Location = new System.Drawing.Point(180, 120);
+            this.msgBox.Multiline = true;
+            this.msgBox.Name = "msgBox";
+            this.msgBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.msgBox.Size = new System.Drawing.Size(640, 590);
+            this.msgBox.TabIndex = 2;
+            this.msgBox.WordWrap = false;
+            // 
             // Translate
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -303,12 +304,12 @@ namespace pppl_uml_python
         private System.Windows.Forms.Button btnParse;
         private System.Windows.Forms.Button btnVisualize;
         private System.Windows.Forms.Button btnSimulate;
-        private System.Windows.Forms.TextBox msgBox;
         private System.Windows.Forms.Button btExportPython;
         private System.Windows.Forms.Button btHelp;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem howToMenuItem;
         private System.Windows.Forms.ToolStripMenuItem documentationMenuItem;
+        private System.Windows.Forms.TextBox msgBox;
     }
 }
 
