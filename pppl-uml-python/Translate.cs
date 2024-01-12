@@ -25,7 +25,7 @@ namespace pppl_uml_python
 
         private string selectedFilePath;
 
-        private void btnUpload_Click(object sender, EventArgs e)
+        private void btnSelect_Click(object sender, EventArgs e)
         {
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
@@ -56,7 +56,7 @@ namespace pppl_uml_python
                 }
             }
         }
-        private void btnGenerate_Click(object sender, EventArgs e)
+        private void btnTranslate_Click(object sender, EventArgs e)
         {
             try
             {
@@ -66,7 +66,7 @@ namespace pppl_uml_python
                     JObject jsonObject = JObject.Parse(msgBox.Text);
                     string pythonCode = GeneratePythonCode(jsonObject);
                     textGeneratePython.Text = pythonCode;
-                    btExportPython.Enabled = true;
+                    btnSave.Enabled = true;
                     textGeneratePython.ForeColor = System.Drawing.Color.Black;
                 }
                 else
@@ -356,13 +356,13 @@ namespace pppl_uml_python
         }
         private void btHelp_Click(object sender, EventArgs e)
         {
-            contextMenuStrip1.Show(btHelp, new Point(0, btHelp.Height));
+            contextMenuStrip1.Show(btnHelp, new Point(0, btnHelp.Height));
         }
         private void howToMenuItem_Click(object sender, EventArgs e)
         {
             string message = "How to Use the Application:\n\n";
-            message += "1. Upload your JSON file\n";
-            message += "2. Click the 'Generate to Python' button to generate the json into Python\n";
+            message += "1. Select your JSON file\n";
+            message += "2. Click the 'Translate' button to translate the json model into Python\n";
             message += "3. The result will be displayed on the screen\n";
             message += "4. If you want to save the result to a Python file, please click the 'Save' button";
             MessageBox.Show(message, "How to Use the Application", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -375,33 +375,35 @@ namespace pppl_uml_python
                 System.Diagnostics.Process.Start("https://github.com/seoeka/pppl-uml-python/blob/master/README.md");
             }
         }
-        private void btExportPython_Click(object sender, EventArgs e)
+        private void btnSave_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(msgBox.Text))
             {
                 MessageBox.Show("Please upload a JSON file and generate Python code first!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            if (string.IsNullOrWhiteSpace(textGeneratePython.Text))
+            if (string.IsNullOrWhiteSpace(textGeneratePython.Text) || textGeneratePython.Text == "translated python appears here...")
             {
                 MessageBox.Show("Please generate Python code first!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            using (SaveFileDialog saveFileDialog = new SaveFileDialog())
-            {
-                saveFileDialog.Filter = "Python Files (*.py)|*.py|Text Files (*.txt)|*.txt|All Files (*.*)|*.*";
-                saveFileDialog.FilterIndex = 1;
-                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            else {
+                using (SaveFileDialog saveFileDialog = new SaveFileDialog())
                 {
-                    string filePath = saveFileDialog.FileName;
-                    try
+                    saveFileDialog.Filter = "Python Files (*.py)|*.py|Text Files (*.txt)|*.txt|All Files (*.*)|*.*";
+                    saveFileDialog.FilterIndex = 1;
+                    if (saveFileDialog.ShowDialog() == DialogResult.OK)
                     {
-                        File.WriteAllText(filePath, textGeneratePython.Text);
-                        MessageBox.Show("Python code exported successfully!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show($"Error exporting Python code: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        string filePath = saveFileDialog.FileName;
+                        try
+                        {
+                            File.WriteAllText(filePath, textGeneratePython.Text);
+                            MessageBox.Show("Python code exported successfully!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show($"Error exporting Python code: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
                     }
                 }
             }
@@ -601,7 +603,6 @@ namespace pppl_uml_python
                     string stateName = state["state_name"]?.ToString();
                     string stateModelName = $"{objectName}.{stateName}";
 
-                    // Check uniqueness of state model
                     if (!uniqueStates.Add(stateModelName))
                     {
                         HandleError($"Syntax error 18: State {stateModelName} is not unique in {assignerStateModelName}.");

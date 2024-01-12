@@ -34,14 +34,14 @@ namespace pppl_uml_python
             this.label4 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.textGeneratePython = new System.Windows.Forms.Label();
-            this.btnGenerate = new System.Windows.Forms.Button();
+            this.btnTranslate = new System.Windows.Forms.Button();
             this.btnClear = new System.Windows.Forms.Button();
-            this.btnUpload = new System.Windows.Forms.Button();
+            this.btnSelect = new System.Windows.Forms.Button();
             this.btnParse = new System.Windows.Forms.Button();
             this.btnVisualize = new System.Windows.Forms.Button();
             this.btnSimulate = new System.Windows.Forms.Button();
-            this.btExportPython = new System.Windows.Forms.Button();
-            this.btHelp = new System.Windows.Forms.Button();
+            this.btnSave = new System.Windows.Forms.Button();
+            this.btnHelp = new System.Windows.Forms.Button();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.howToMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.documentationMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -136,18 +136,18 @@ namespace pppl_uml_python
             this.textGeneratePython.Text = "translated python appears here...";
             this.textGeneratePython.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.textGeneratePython_MouseDoubleClick);
             // 
-            // btnGenerate
+            // btnTranslate
             // 
-            this.btnGenerate.BackColor = System.Drawing.Color.Black;
-            this.btnGenerate.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnGenerate.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.btnGenerate.Location = new System.Drawing.Point(30, 150);
-            this.btnGenerate.Name = "btnGenerate";
-            this.btnGenerate.Size = new System.Drawing.Size(111, 40);
-            this.btnGenerate.TabIndex = 4;
-            this.btnGenerate.Text = "Translate";
-            this.btnGenerate.UseVisualStyleBackColor = false;
-            this.btnGenerate.Click += new System.EventHandler(this.btnGenerate_Click);
+            this.btnTranslate.BackColor = System.Drawing.Color.Black;
+            this.btnTranslate.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnTranslate.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.btnTranslate.Location = new System.Drawing.Point(30, 150);
+            this.btnTranslate.Name = "btnTranslate";
+            this.btnTranslate.Size = new System.Drawing.Size(111, 40);
+            this.btnTranslate.TabIndex = 4;
+            this.btnTranslate.Text = "Translate";
+            this.btnTranslate.UseVisualStyleBackColor = false;
+            this.btnTranslate.Click += new System.EventHandler(this.btnTranslate_Click);
             // 
             // btnClear
             // 
@@ -162,18 +162,18 @@ namespace pppl_uml_python
             this.btnClear.UseVisualStyleBackColor = false;
             this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             // 
-            // btnUpload
+            // btnSelect
             // 
-            this.btnUpload.BackColor = System.Drawing.Color.Black;
-            this.btnUpload.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnUpload.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.btnUpload.Location = new System.Drawing.Point(30, 90);
-            this.btnUpload.Name = "btnUpload";
-            this.btnUpload.Size = new System.Drawing.Size(111, 40);
-            this.btnUpload.TabIndex = 1;
-            this.btnUpload.Text = "Select File";
-            this.btnUpload.UseVisualStyleBackColor = false;
-            this.btnUpload.Click += new System.EventHandler(this.btnUpload_Click);
+            this.btnSelect.BackColor = System.Drawing.Color.Black;
+            this.btnSelect.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSelect.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.btnSelect.Location = new System.Drawing.Point(30, 90);
+            this.btnSelect.Name = "btnSelect";
+            this.btnSelect.Size = new System.Drawing.Size(111, 40);
+            this.btnSelect.TabIndex = 1;
+            this.btnSelect.Text = "Select File";
+            this.btnSelect.UseVisualStyleBackColor = false;
+            this.btnSelect.Click += new System.EventHandler(this.btnSelect_Click);
             // 
             // btnParse
             // 
@@ -214,32 +214,32 @@ namespace pppl_uml_python
             this.btnSimulate.UseVisualStyleBackColor = false;
             this.btnSimulate.Click += new System.EventHandler(this.btnSimulate_Click);
             // 
-            // btExportPython
+            // btnSave
             // 
-            this.btExportPython.BackColor = System.Drawing.Color.Black;
-            this.btExportPython.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btExportPython.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.btExportPython.Location = new System.Drawing.Point(30, 514);
-            this.btExportPython.Name = "btExportPython";
-            this.btExportPython.Size = new System.Drawing.Size(111, 40);
-            this.btExportPython.TabIndex = 8;
-            this.btExportPython.Text = "Save";
-            this.btExportPython.UseVisualStyleBackColor = false;
-            this.btExportPython.Click += new System.EventHandler(this.btExportPython_Click);
+            this.btnSave.BackColor = System.Drawing.Color.Black;
+            this.btnSave.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnSave.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.btnSave.Location = new System.Drawing.Point(30, 514);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(111, 40);
+            this.btnSave.TabIndex = 8;
+            this.btnSave.Text = "Save";
+            this.btnSave.UseVisualStyleBackColor = false;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
-            // btHelp
+            // btnHelp
             // 
-            this.btHelp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btHelp.BackColor = System.Drawing.Color.Black;
-            this.btHelp.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btHelp.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.btHelp.Location = new System.Drawing.Point(30, 659);
-            this.btHelp.Name = "btHelp";
-            this.btHelp.Size = new System.Drawing.Size(111, 40);
-            this.btHelp.TabIndex = 8;
-            this.btHelp.Text = "Help";
-            this.btHelp.UseVisualStyleBackColor = false;
-            this.btHelp.Click += new System.EventHandler(this.btHelp_Click);
+            this.btnHelp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnHelp.BackColor = System.Drawing.Color.Black;
+            this.btnHelp.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnHelp.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.btnHelp.Location = new System.Drawing.Point(30, 659);
+            this.btnHelp.Name = "btnHelp";
+            this.btnHelp.Size = new System.Drawing.Size(111, 40);
+            this.btnHelp.TabIndex = 8;
+            this.btnHelp.Text = "Help";
+            this.btnHelp.UseVisualStyleBackColor = false;
+            this.btnHelp.Click += new System.EventHandler(this.btHelp_Click);
             // 
             // contextMenuStrip1
             // 
@@ -330,14 +330,14 @@ namespace pppl_uml_python
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.btnCopy);
-            this.Controls.Add(this.btHelp);
-            this.Controls.Add(this.btExportPython);
-            this.Controls.Add(this.btnUpload);
+            this.Controls.Add(this.btnHelp);
+            this.Controls.Add(this.btnSave);
+            this.Controls.Add(this.btnSelect);
             this.Controls.Add(this.btnClear);
             this.Controls.Add(this.btnParse);
             this.Controls.Add(this.btnVisualize);
             this.Controls.Add(this.btnSimulate);
-            this.Controls.Add(this.btnGenerate);
+            this.Controls.Add(this.btnTranslate);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.label4);
             this.Name = "Translate";
@@ -359,14 +359,14 @@ namespace pppl_uml_python
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label textGeneratePython;
-        private System.Windows.Forms.Button btnGenerate;
+        private System.Windows.Forms.Button btnTranslate;
         private System.Windows.Forms.Button btnClear;
-        private System.Windows.Forms.Button btnUpload;
+        private System.Windows.Forms.Button btnSelect;
         private System.Windows.Forms.Button btnParse;
         private System.Windows.Forms.Button btnVisualize;
         private System.Windows.Forms.Button btnSimulate;
-        private System.Windows.Forms.Button btExportPython;
-        private System.Windows.Forms.Button btHelp;
+        private System.Windows.Forms.Button btnSave;
+        private System.Windows.Forms.Button btnHelp;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem howToMenuItem;
         private System.Windows.Forms.ToolStripMenuItem documentationMenuItem;
