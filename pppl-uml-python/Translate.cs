@@ -448,13 +448,6 @@ namespace pppl_uml_python
 
         private void CheckError(string filePath)
         {
-            if (filePath == null || filePath.Length == 0)
-            {
-                MessageBox.Show("Please select a folder containing JSON files first.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                return;
-            }
-
             JArray jsonArray = this.ProcessJson(filePath);
 
             msgBox.Clear();
@@ -490,10 +483,18 @@ namespace pppl_uml_python
 
         private void btnParse_Click(object sender, EventArgs e)
         {
-            CheckError(selectedFilePath);
-            if (string.IsNullOrWhiteSpace(msgBox.Text))
+            if (selectedFilePath == null || selectedFilePath.Length == 0)
             {
-                msgBox.Text = "Model has successfully passed parsing";
+                MessageBox.Show("Please select JSON file first.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
+            }
+            else                
+            {
+                CheckError(selectedFilePath);
+                if (string.IsNullOrWhiteSpace(msgBox.Text))
+                {
+                    msgBox.Text = "Model has successfully passed parsing";
+                }
             }
         }
         public TextBox GetMessageBox()
