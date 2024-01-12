@@ -76,7 +76,7 @@ namespace pppl_uml_python
                     else
                     {
                         msgBox.Clear();
-                        MessageBox.Show("Seems like JSON format is incorrect or incompatible, click Parse first!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("Seems like JSON format is incorrect or incompatible, click Parse to check the error!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
                 else
@@ -84,7 +84,7 @@ namespace pppl_uml_python
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error generating Python code: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error translating to Python: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         private string GeneratePythonCode(JObject jsonObject)
@@ -387,12 +387,12 @@ namespace pppl_uml_python
         {
             if (string.IsNullOrWhiteSpace(msgBox.Text))
             {
-                MessageBox.Show("Please upload a JSON file and generate Python code first!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Please upload a JSON file and translate to Python first!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             if (string.IsNullOrWhiteSpace(textGeneratePython.Text) || textGeneratePython.Text == "translated python appears here...")
             {
-                MessageBox.Show("Please generate Python code first!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Please translate to Python code first!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             else {
@@ -726,6 +726,22 @@ namespace pppl_uml_python
                             }
                         }
                     }
+                }
+            }
+        }
+
+        private void btnCopy_Click(object sender, EventArgs e)
+        {
+            if(isJsonFileSelected == false)
+                MessageBox.Show("Please select JSON file first!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            else
+            {
+                if(textGeneratePython.Text == "translated python appears here...")
+                    MessageBox.Show("Please translate to Python first!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                else
+                {
+                    Clipboard.SetText(textGeneratePython.Text);
+                    MessageBox.Show("Text successfully copied to Clipboard!");
                 }
             }
         }

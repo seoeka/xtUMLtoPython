@@ -288,6 +288,7 @@ namespace pppl_uml_python
             this.btnCopy.TabIndex = 11;
             this.btnCopy.Text = "Copy";
             this.btnCopy.UseVisualStyleBackColor = false;
+            this.btnCopy.Click += new System.EventHandler(this.btnCopy_Click);
             // 
             // label5
             // 
