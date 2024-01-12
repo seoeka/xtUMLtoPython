@@ -11,6 +11,7 @@ using System.Xml.Linq;
 using System.Linq;
 using System.Drawing;
 using System.Security.Cryptography.X509Certificates;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace pppl_uml_python
 {
@@ -28,18 +29,16 @@ namespace pppl_uml_python
         {
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
-                openFileDialog.Filter = "JSON Files (*.json)|*.json|Text Files (*.txt)|*.txt|All Files (*.*)|*.*";
+                openFileDialog.Filter = "JSON Files (*.json)|*.json";
                 openFileDialog.FilterIndex = 1;
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     selectedFilePath = openFileDialog.FileName;
-                    bt_copyJSON.Enabled = true;
                     try
                     {
                         JToken parsedJson = JToken.Parse(File.ReadAllText(selectedFilePath));
                         string formattedJson = parsedJson.ToString(Formatting.Indented);
-
-                        textBox1.Text = formattedJson;
+                        msgBox.Text = formattedJson;
                     }
                     catch (Exception ex)
                     {
@@ -52,16 +51,15 @@ namespace pppl_uml_python
         {
             try
             {
-                if (string.IsNullOrWhiteSpace(textBox1.Text))
+                if (string.IsNullOrWhiteSpace(msgBox.Text))
                 {
                     MessageBox.Show("Please enter a JSON file first!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-                JObject jsonObject = JObject.Parse(textBox1.Text);
+                JObject jsonObject = JObject.Parse(msgBox.Text);
                 string pythonCode = GeneratePythonCode(jsonObject);
                 textGeneratePython.Text = pythonCode;
                 btExportPython.Enabled = true;
-                bt_copyPy.Enabled = true;
                 textGeneratePython.ForeColor = System.Drawing.Color.Black;
             }
             catch (Exception ex)
@@ -147,7 +145,7 @@ namespace pppl_uml_python
                             string dataType = attribute["data_type"]?.ToString();
                             if (!string.IsNullOrEmpty(attributeName) && !string.IsNullOrEmpty(dataType))
                             {
-                                string pythonDataType = ConvertCSharpToPythonDataType(dataType);
+                                string pythonDataType = GetDefaultPythonValue(dataType);
                                 string defaultValue = attribute["default_value"]?.ToString()?.Trim() ?? GetDefaultPythonValue(pythonDataType);
                                 if (attributeName != null && attributeName.StartsWith("status"))
                                 {
@@ -276,7 +274,7 @@ namespace pppl_uml_python
                             var attribute = associationAttributesArray[i];
                             string dataType = attribute["data_type"]?.ToString();
                             string attributeName = attribute["attribute_name"]?.ToString();
-                            string pythonDataType = ConvertCSharpToPythonDataType(dataType);
+                            string pythonDataType = GetDefaultPythonValue(dataType);
                             if (attribute["attribute_type"]?.ToString() == "naming_attribute")
                             {
                                 string defaultValue = attribute["default_value"]?.ToString() ?? GetDefaultPythonValue(pythonDataType);
@@ -316,44 +314,25 @@ namespace pppl_uml_python
                     return "str";
                 case "int":
                     return "int";
-                case "float":
-                    return "float";
-                case "inst_ref":
-                    return "ref";
-                default:
-                    return "";
-            }
-        }
-        private string ConvertCSharpToPythonDataType(string csharpDataType)
-        {
-            switch (csharpDataType)
-            {
-                case "id":
                 case "integer":
                     return "int";
                 case "real":
                     return "float";
+                case "float":
+                    return "float";
+                case "inst_ref":
+                    return "ref";
                 case "string":
                 case "state":
                     return "str";
                 default:
-                    return csharpDataType;
+                    return pythonDataType;
             }
-        }
-        private void bt_copyPy_Click(object sender, EventArgs e)
-        {
-            Clipboard.SetText(textGeneratePython.Text);
-            MessageBox.Show("Python code copied to clipboard!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-        private void bt_copyJSON_Click(object sender, EventArgs e)
-        {
-            Clipboard.SetText(textBox1.Text);
-            MessageBox.Show("JSON content copied to clipboard!", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         private const string PlaceholderText = "translated python appears here..";
         private void btnClear_Click(object sender, EventArgs e)
         {
-            textBox1.Clear();
+            msgBox.Clear();
             ClearPythonOutput();
         }
         private void ClearPythonOutput()
@@ -385,15 +364,15 @@ namespace pppl_uml_python
         }
         private void btExportPython_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(textBox1.Text))
+            if (string.IsNullOrWhiteSpace(msgBox.Text))
             {
                 MessageBox.Show("Please upload a JSON file and generate Python code first!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;  // Stop further execution
+                return;
             }
             if (string.IsNullOrWhiteSpace(textGeneratePython.Text))
             {
                 MessageBox.Show("Please generate Python code first!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;  // Stop further execution
+                return;
             }
             using (SaveFileDialog saveFileDialog = new SaveFileDialog())
             {
@@ -419,6 +398,18 @@ namespace pppl_uml_python
         {
             Clipboard.SetText(textGeneratePython.Text);
             MessageBox.Show("Text successfully copied to Clipboard!");
+        }
+
+        private void btnVisualize_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("We are sorry, this feature is not available right now.", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            return;
+        }
+
+        private void btnSimulate_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("We are sorry, this feature is not available right now.", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            return;
         }
     }
 }

@@ -49,6 +49,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Parsing\CheckPointParsing1115.cs" />
+    <Compile Include="Parsing\CheckPointParsing15.cs" />
+    <Compile Include="Parsing\CheckPointParsing610.cs" />
+    <Compile Include="Parsing\ParsingPoint.cs" />
     <Compile Include="Translate.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -83,8 +87,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="parsing\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
