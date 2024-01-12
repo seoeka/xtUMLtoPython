@@ -46,8 +46,12 @@ namespace pppl_uml_python
             this.howToMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.documentationMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.msgBox = new System.Windows.Forms.TextBox();
+            this.btnCopy = new System.Windows.Forms.Button();
+            this.label5 = new System.Windows.Forms.Label();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -55,35 +59,39 @@ namespace pppl_uml_python
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.BackColor = System.Drawing.Color.Black;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
+            this.label1.Font = new System.Drawing.Font("Trebuchet MS", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.White;
             this.label1.Location = new System.Drawing.Point(0, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(1300, 50);
+            this.label1.Size = new System.Drawing.Size(1029, 50);
             this.label1.TabIndex = 0;
             this.label1.Text = "xtUML Model Compiler";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label2
             // 
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.label2.BackColor = System.Drawing.Color.Black;
-            this.label2.Font = new System.Drawing.Font("Arial", 10.125F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(180, 90);
+            this.label2.Location = new System.Drawing.Point(3, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(640, 30);
+            this.label2.Size = new System.Drawing.Size(424, 30);
             this.label2.TabIndex = 9;
             this.label2.Text = "JSON";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label3
             // 
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.label3.BackColor = System.Drawing.Color.Black;
-            this.label3.Font = new System.Drawing.Font("Arial", 10.125F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.White;
-            this.label3.Location = new System.Drawing.Point(850, 90);
+            this.label3.Location = new System.Drawing.Point(433, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(640, 30);
+            this.label3.Size = new System.Drawing.Size(424, 30);
             this.label3.TabIndex = 10;
             this.label3.Text = "Python";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -93,24 +101,27 @@ namespace pppl_uml_python
             this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label4.BackColor = System.Drawing.Color.Black;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
+            this.label4.Font = new System.Drawing.Font("Trebuchet MS", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
             this.label4.Location = new System.Drawing.Point(0, 45);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(1300, 30);
+            this.label4.Size = new System.Drawing.Size(1029, 30);
             this.label4.TabIndex = 0;
             this.label4.Text = "from xtUML JSON Model to Python";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // panel1
             // 
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.AutoScroll = true;
             this.panel1.BackColor = System.Drawing.Color.White;
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel1.Controls.Add(this.textGeneratePython);
-            this.panel1.Location = new System.Drawing.Point(851, 120);
+            this.panel1.Location = new System.Drawing.Point(433, 40);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(639, 590);
+            this.panel1.Size = new System.Drawing.Size(424, 566);
             this.panel1.TabIndex = 1;
             // 
             // textGeneratePython
@@ -128,11 +139,11 @@ namespace pppl_uml_python
             // btnGenerate
             // 
             this.btnGenerate.BackColor = System.Drawing.Color.Black;
-            this.btnGenerate.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
+            this.btnGenerate.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnGenerate.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.btnGenerate.Location = new System.Drawing.Point(30, 150);
             this.btnGenerate.Name = "btnGenerate";
-            this.btnGenerate.Size = new System.Drawing.Size(125, 40);
+            this.btnGenerate.Size = new System.Drawing.Size(111, 40);
             this.btnGenerate.TabIndex = 4;
             this.btnGenerate.Text = "Translate";
             this.btnGenerate.UseVisualStyleBackColor = false;
@@ -141,11 +152,11 @@ namespace pppl_uml_python
             // btnClear
             // 
             this.btnClear.BackColor = System.Drawing.Color.Black;
-            this.btnClear.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
+            this.btnClear.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnClear.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.btnClear.Location = new System.Drawing.Point(30, 390);
             this.btnClear.Name = "btnClear";
-            this.btnClear.Size = new System.Drawing.Size(125, 40);
+            this.btnClear.Size = new System.Drawing.Size(111, 40);
             this.btnClear.TabIndex = 6;
             this.btnClear.Text = "Reset";
             this.btnClear.UseVisualStyleBackColor = false;
@@ -154,11 +165,11 @@ namespace pppl_uml_python
             // btnUpload
             // 
             this.btnUpload.BackColor = System.Drawing.Color.Black;
-            this.btnUpload.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
+            this.btnUpload.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnUpload.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.btnUpload.Location = new System.Drawing.Point(30, 90);
             this.btnUpload.Name = "btnUpload";
-            this.btnUpload.Size = new System.Drawing.Size(125, 40);
+            this.btnUpload.Size = new System.Drawing.Size(111, 40);
             this.btnUpload.TabIndex = 1;
             this.btnUpload.Text = "Select File";
             this.btnUpload.UseVisualStyleBackColor = false;
@@ -167,11 +178,11 @@ namespace pppl_uml_python
             // btnParse
             // 
             this.btnParse.BackColor = System.Drawing.Color.Black;
-            this.btnParse.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
+            this.btnParse.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnParse.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.btnParse.Location = new System.Drawing.Point(30, 210);
             this.btnParse.Name = "btnParse";
-            this.btnParse.Size = new System.Drawing.Size(125, 40);
+            this.btnParse.Size = new System.Drawing.Size(111, 40);
             this.btnParse.TabIndex = 1;
             this.btnParse.Text = "Parse";
             this.btnParse.UseVisualStyleBackColor = false;
@@ -180,11 +191,11 @@ namespace pppl_uml_python
             // btnVisualize
             // 
             this.btnVisualize.BackColor = System.Drawing.Color.Black;
-            this.btnVisualize.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
+            this.btnVisualize.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnVisualize.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.btnVisualize.Location = new System.Drawing.Point(30, 270);
             this.btnVisualize.Name = "btnVisualize";
-            this.btnVisualize.Size = new System.Drawing.Size(125, 40);
+            this.btnVisualize.Size = new System.Drawing.Size(111, 40);
             this.btnVisualize.TabIndex = 1;
             this.btnVisualize.Text = "Visualize";
             this.btnVisualize.UseVisualStyleBackColor = false;
@@ -193,11 +204,11 @@ namespace pppl_uml_python
             // btnSimulate
             // 
             this.btnSimulate.BackColor = System.Drawing.Color.Black;
-            this.btnSimulate.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
+            this.btnSimulate.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSimulate.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.btnSimulate.Location = new System.Drawing.Point(30, 330);
             this.btnSimulate.Name = "btnSimulate";
-            this.btnSimulate.Size = new System.Drawing.Size(125, 40);
+            this.btnSimulate.Size = new System.Drawing.Size(111, 40);
             this.btnSimulate.TabIndex = 1;
             this.btnSimulate.Text = "Simulate";
             this.btnSimulate.UseVisualStyleBackColor = false;
@@ -206,11 +217,11 @@ namespace pppl_uml_python
             // btExportPython
             // 
             this.btExportPython.BackColor = System.Drawing.Color.Black;
-            this.btExportPython.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
+            this.btExportPython.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btExportPython.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.btExportPython.Location = new System.Drawing.Point(30, 450);
+            this.btExportPython.Location = new System.Drawing.Point(30, 514);
             this.btExportPython.Name = "btExportPython";
-            this.btExportPython.Size = new System.Drawing.Size(125, 40);
+            this.btExportPython.Size = new System.Drawing.Size(111, 40);
             this.btExportPython.TabIndex = 8;
             this.btExportPython.Text = "Save";
             this.btExportPython.UseVisualStyleBackColor = false;
@@ -218,11 +229,13 @@ namespace pppl_uml_python
             // 
             // btHelp
             // 
+            this.btHelp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.btHelp.BackColor = System.Drawing.Color.Black;
+            this.btHelp.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btHelp.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.btHelp.Location = new System.Drawing.Point(30, 670);
+            this.btHelp.Location = new System.Drawing.Point(30, 659);
             this.btHelp.Name = "btHelp";
-            this.btHelp.Size = new System.Drawing.Size(125, 40);
+            this.btHelp.Size = new System.Drawing.Size(111, 40);
             this.btHelp.TabIndex = 8;
             this.btHelp.Text = "Help";
             this.btHelp.UseVisualStyleBackColor = false;
@@ -252,20 +265,71 @@ namespace pppl_uml_python
             // 
             // msgBox
             // 
+            this.msgBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.msgBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.msgBox.Location = new System.Drawing.Point(180, 120);
+            this.msgBox.Location = new System.Drawing.Point(3, 40);
             this.msgBox.Multiline = true;
             this.msgBox.Name = "msgBox";
-            this.msgBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.msgBox.Size = new System.Drawing.Size(640, 590);
+            this.msgBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.msgBox.Size = new System.Drawing.Size(424, 566);
             this.msgBox.TabIndex = 2;
             this.msgBox.WordWrap = false;
+            // 
+            // btnCopy
+            // 
+            this.btnCopy.BackColor = System.Drawing.Color.Black;
+            this.btnCopy.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCopy.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.btnCopy.Location = new System.Drawing.Point(30, 450);
+            this.btnCopy.Name = "btnCopy";
+            this.btnCopy.Size = new System.Drawing.Size(111, 40);
+            this.btnCopy.TabIndex = 11;
+            this.btnCopy.Text = "Copy";
+            this.btnCopy.UseVisualStyleBackColor = false;
+            // 
+            // label5
+            // 
+            this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label5.BackColor = System.Drawing.Color.Gray;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
+            this.label5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(204)))), ((int)(((byte)(204)))), ((int)(((byte)(204)))));
+            this.label5.Location = new System.Drawing.Point(-94, 75);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(1300, 8);
+            this.label5.TabIndex = 12;
+            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableLayoutPanel1.ColumnCount = 2;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.Controls.Add(this.label2, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.label3, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.panel1, 1, 1);
+            this.tableLayoutPanel1.Controls.Add(this.msgBox, 0, 1);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(156, 90);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 2;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 6.114398F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 93.8856F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(860, 609);
+            this.tableLayoutPanel1.TabIndex = 13;
             // 
             // Translate
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1184, 749);
+            this.ClientSize = new System.Drawing.Size(1028, 711);
+            this.Controls.Add(this.tableLayoutPanel1);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.btnCopy);
             this.Controls.Add(this.btHelp);
             this.Controls.Add(this.btExportPython);
             this.Controls.Add(this.btnUpload);
@@ -273,12 +337,8 @@ namespace pppl_uml_python
             this.Controls.Add(this.btnParse);
             this.Controls.Add(this.btnVisualize);
             this.Controls.Add(this.btnSimulate);
-            this.Controls.Add(this.msgBox);
             this.Controls.Add(this.btnGenerate);
-            this.Controls.Add(this.panel1);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label3);
             this.Controls.Add(this.label4);
             this.Name = "Translate";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -287,8 +347,9 @@ namespace pppl_uml_python
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.contextMenuStrip1.ResumeLayout(false);
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
         #endregion
@@ -310,6 +371,9 @@ namespace pppl_uml_python
         private System.Windows.Forms.ToolStripMenuItem howToMenuItem;
         private System.Windows.Forms.ToolStripMenuItem documentationMenuItem;
         private System.Windows.Forms.TextBox msgBox;
+        private System.Windows.Forms.Button btnCopy;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
     }
 }
 
