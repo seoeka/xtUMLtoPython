@@ -41,7 +41,7 @@ namespace pppl_uml_python
                     {
                         JToken parsedJson = JToken.Parse(File.ReadAllText(selectedFilePath));
                         string formattedJson = parsedJson.ToString(Formatting.Indented);
-
+                        textBox1.Text = selectedFilePath;
                         CheckError(selectedFilePath);
                         if (string.IsNullOrWhiteSpace(msgBox.Text))
                         {
@@ -371,6 +371,7 @@ namespace pppl_uml_python
         {
             isJsonFileSelected = false;
             msgBox.Clear();
+            textBox1.Clear();
             ClearPythonOutput();
         }
         private void ClearPythonOutput()
@@ -383,7 +384,7 @@ namespace pppl_uml_python
         {
             if (string.IsNullOrWhiteSpace(msgBox.Text))
             {
-                MessageBox.Show("Please upload a JSON file and translate to Python first!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Please select JSON file first!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             if (string.IsNullOrWhiteSpace(textGeneratePython.Text) || textGeneratePython.Text == PlaceholderText)
