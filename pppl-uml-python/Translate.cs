@@ -25,6 +25,7 @@ namespace pppl_uml_python
 
         private string selectedFilePath;
         private bool isJsonFileSelected = false;
+        private const string PlaceholderText = "translated python appears here..";
 
         private void btnSelect_Click(object sender, EventArgs e)
         {
@@ -85,6 +86,23 @@ namespace pppl_uml_python
             catch (Exception ex)
             {
                 MessageBox.Show($"Error translating to Python: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnParse_Click(object sender, EventArgs e)
+        {
+            if (selectedFilePath == null || selectedFilePath.Length == 0 || isJsonFileSelected == false)
+            {
+                MessageBox.Show("Please select JSON file first!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            else
+            {
+                CheckError(selectedFilePath);
+                if (string.IsNullOrWhiteSpace(msgBox.Text))
+                {
+                    msgBox.Text = "Model has successfully passed parsing";
+                }
             }
         }
         private string GeneratePythonCode(JObject jsonObject)
@@ -349,7 +367,6 @@ namespace pppl_uml_python
                     return pythonDataType;
             }
         }
-        private const string PlaceholderText = "translated python appears here..";
         private void btnClear_Click(object sender, EventArgs e)
         {
             isJsonFileSelected = false;
@@ -362,27 +379,6 @@ namespace pppl_uml_python
             textGeneratePython.ForeColor = System.Drawing.Color.Gray;
             textGeneratePython.Text = PlaceholderText;
         }
-        private void btHelp_Click(object sender, EventArgs e)
-        {
-            contextMenuStrip1.Show(btnHelp, new Point(0, btnHelp.Height));
-        }
-        private void howToMenuItem_Click(object sender, EventArgs e)
-        {
-            string message = "How to Use the Application:\n\n";
-            message += "1. Select your JSON file\n";
-            message += "2. Click the 'Translate' button to translate the json model into Python\n";
-            message += "3. The result will be displayed on the screen\n";
-            message += "4. If you want to save the result to a Python file, please click the 'Save' button";
-            MessageBox.Show(message, "How to Use the Application", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-        private void documentationMenuItem_Click(object sender, EventArgs e)
-        {
-            DialogResult result = MessageBox.Show("Are you sure you want to open the Documentation?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (result == DialogResult.Yes)
-            {
-                System.Diagnostics.Process.Start("https://github.com/seoeka/pppl-uml-python/blob/master/README.md");
-            }
-        }
         private void btnSave_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(msgBox.Text))
@@ -390,12 +386,13 @@ namespace pppl_uml_python
                 MessageBox.Show("Please upload a JSON file and translate to Python first!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            if (string.IsNullOrWhiteSpace(textGeneratePython.Text) || textGeneratePython.Text == "translated python appears here...")
+            if (string.IsNullOrWhiteSpace(textGeneratePython.Text) || textGeneratePython.Text == PlaceholderText)
             {
                 MessageBox.Show("Please translate to Python code first!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            else {
+            else
+            {
                 using (SaveFileDialog saveFileDialog = new SaveFileDialog())
                 {
                     saveFileDialog.Filter = "Python Files (*.py)|*.py|Text Files (*.txt)|*.txt|All Files (*.*)|*.*";
@@ -416,7 +413,31 @@ namespace pppl_uml_python
                 }
             }
         }
-
+        private void btHelp_Click(object sender, EventArgs e)
+        {
+            contextMenuStrip1.Show(btnHelp, new Point(0, btnHelp.Height));
+        }
+        private void howToMenuItem_Click(object sender, EventArgs e)
+        {
+            string message = "How to Use the Application:\n\n";
+            message += "1. Select your JSON file\n";
+            message += "2. Click the 'Translate' button to translate the json model into Python\n";
+            message += "3. The result will be displayed on the screen\n";
+            message += "4. If you want to save the result to a Python file, please click the 'Save' button";
+            MessageBox.Show(message, "How to Use the Application", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+        private void documentationMenuItem_Click(object sender, EventArgs e)
+        {
+            string message = "About :\n";
+            message += "The xtUML JSON to Python Translator is a specialized tool designed to facilitate the conversion of data structures between the xtUML modeling language and Python. " +
+                       "This application streamlines the translation process, enabling seamless interoperability between xtUML models and Python code.\n\n";
+            message += "Details :\n";
+            message += "Logical Organization\r\nData Organization - Centralized\r\nPhysical Organization - Direct Correspondence\r\n" +
+                       "Memory Management - Operating System\r\nInstance Relationship - Relational or Object Oriented Approach\r\n" +
+                       "Relationship Integrity - Require All Unconditional\r\nReferential Attributes - Store as Part of Physical 50/50 + Look Up Across\r\nDerived Attributes - Derived for Each Access";
+            MessageBox.Show(message, "Documentation", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+        
         private void textGeneratePython_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             Clipboard.SetText(textGeneratePython.Text);
@@ -491,22 +512,6 @@ namespace pppl_uml_python
             CheckParsing1115.Point99(this, jsonArray);
         }
 
-        private void btnParse_Click(object sender, EventArgs e)
-        {
-            if (selectedFilePath == null || selectedFilePath.Length == 0 || isJsonFileSelected == false)
-            {
-                MessageBox.Show("Please select JSON file first!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            else                
-            {
-                CheckError(selectedFilePath);
-                if (string.IsNullOrWhiteSpace(msgBox.Text))
-                {
-                    msgBox.Text = "Model has successfully passed parsing";
-                }
-            }
-        }
         public TextBox GetMessageBox()
         {
             return msgBox;
@@ -712,7 +717,6 @@ namespace pppl_uml_python
                                                     {
                                                         string targetStateModel = target?.ToString();
 
-                                                        // Check if target state model is in the state models dictionary
                                                         if (!stateModels.ContainsKey(targetStateModel))
                                                         {
                                                             HandleError($"Syntax error 24: Event '{eventName}' in state '{stateModelName}' targets non-existent state model '{targetStateModel}'.");
@@ -736,7 +740,7 @@ namespace pppl_uml_python
                 MessageBox.Show("Please select JSON file first!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             else
             {
-                if(textGeneratePython.Text == "translated python appears here...")
+                if(textGeneratePython.Text == PlaceholderText)
                     MessageBox.Show("Please translate to Python first!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 else
                 {
