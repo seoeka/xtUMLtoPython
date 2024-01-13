@@ -1,9 +1,9 @@
 # xtUML Model JSON to Python
- <img src="https://github.com/seoeka/pppl-uml-python/assets/87307944/b86499d6-433c-487e-8d21-94ca4031d833" width="100%" alt="Conciseness Screenshot">
+ <img src="https://github.com/seoeka/pppl-uml-python/assets/87307944/a9082366-8e02-4bda-a0ae-027fc83eeace" width="100%" alt="Conciseness Screenshot">
 
 ## Introduction
 
-Welcome to the documentation for the xtUML JSON to Python Translator application! This document provides an overview of the fundamental principles and concepts that shape the design and organization of our system. A deep understanding of these concepts will assist developers, contributors, and users in effectively engaging with the application.
+Welcome to the documentation for the xtUML Model Compiler for Python! This document provides an overview of the fundamental principles and concepts that shape the design and organization of our system. A deep understanding of these concepts will assist developers, contributors, and users in effectively engaging with the application.
 
 ## Table of Contents
 
@@ -50,4 +50,4 @@ Derived attributes are calculated each time they are accessed, ensuring the accu
 
 ---
 
-By understanding these concepts, you will gain insights into the design and organization of the xtUML JSON to Python Translator. Feel free to explore the details of each concept for a deeper understanding. If you have any questions or feedback, please contribute or reach out to our development team!
+By understanding these concepts, you will gain insights into the design and organization of the xtUML Model Compiler for Python. Feel free to explore the details of each concept for a deeper understanding. If you have any questions or feedback, please contribute or reach out to our development team!
